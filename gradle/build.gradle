@@ -4,7 +4,7 @@ plugins {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-eclipse.project.name = 'SEProjectFramework'
+eclipse.project.name = 'Cs Get Degrees'
 
 sourceSets {
 	main {
