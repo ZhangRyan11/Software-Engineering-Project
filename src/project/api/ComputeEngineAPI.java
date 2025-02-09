@@ -1,4 +1,7 @@
-import java.util.Scanner;
+package project.api;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ComputeEngineAPI {
     public static void main(String[] args) {
@@ -8,11 +11,11 @@ public class ComputeEngineAPI {
         // Ask the user for an integer and save it under a variable 
         System.out.print("Enter an integer: ");
         int num = scanner.nextInt();
-        if(num =< 0){
+        if (num =< 0) {
             System.out.print("Enter an int value greater than 0: ");
             int num = scanner.nextInt();
         }
-        else{
+        else {
 
             // Calculate the square of the given number to see how far to check for factors
             int square = num * num;
@@ -33,3 +36,25 @@ public class ComputeEngineAPI {
         scanner.close();
     }
 }
+
+@Retention(RetentionPolicy.RUNTIME)
+@interface ConceptualAPI {}
+
+@ConceptualAPI
+public interface ComputeEngineAPI {
+    // Submit a new job for processing
+    String submitJob(String computationData);
+
+    // Get the current status of a job
+    JobStatus getJobStatus(String jobId);
+
+    // Get list of all jobs
+    List<ComputeJob> getAllJobs();
+
+    // Trigger execution of a specific job
+    boolean executeJob(String jobId);
+
+    // Cancel a running or queued job
+    boolean cancelJob(String jobId);
+}
+
