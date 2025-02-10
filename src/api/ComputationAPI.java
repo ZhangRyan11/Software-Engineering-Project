@@ -6,8 +6,4 @@ import project.annotations.ConceptualAPI;
 public interface ComputationAPI {
     ComputationResult compute(String inputData, String[] delimiters);
 }
-package project.api;
 
-public class ComputationAPI {
-    
-}
