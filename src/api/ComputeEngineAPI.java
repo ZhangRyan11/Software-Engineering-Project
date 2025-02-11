@@ -1,4 +1,4 @@
-package project.api;
+package api;
 import java.util.Scanner;
 
 public class ComputeEngineAPI {

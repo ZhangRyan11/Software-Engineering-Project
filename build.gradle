@@ -33,6 +33,7 @@ test {
     
       filter {
         excludeTestsMatching "project.annotations.Assignment*"
+        setFailOnNoMatchingTests(false)
       }
 }
 

@@ -1,4 +1,4 @@
-package project.api;
+package api;
 
 
 public interface ComputeRequest {

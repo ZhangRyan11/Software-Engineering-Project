@@ -1,3 +1,4 @@
+package api;
 public class PrototypeComputeEngineAPI {
 
     // Method to get user input from the console
