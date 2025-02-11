@@ -60,7 +60,7 @@ public class ComputeEngineAPI {
         for (int i = 1; i <= square; i++) {
             // Check if i is a factor of the number
             if (num % i == 0) {
-                System.out.println(i + ", ");
+                System.out.print(i + " ");
             }
         }
     }
