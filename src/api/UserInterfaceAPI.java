@@ -1,4 +1,6 @@
-public interface UserInterface{
+import java.util.*;
+
+public interface UserInterfaceAPI{
 	// Method to get a user input int 
     public static int getUserInput(Scanner scanner) {
         int num = 0;
