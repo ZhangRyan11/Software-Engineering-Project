@@ -6,7 +6,7 @@ This system calculates the factorization of input integers. For a given integer 
 
 ### Example
 - **Input:** `8`
-- **Output:** `1, 2, 4, 8`
+- **Output:** `1 2 4 8`
 
 ## Features
 - Accepts a positive integer as input.
