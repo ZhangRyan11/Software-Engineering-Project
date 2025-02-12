@@ -49,7 +49,7 @@ public class PrototypeUserComputeAPI implements UserComputeAPI {
 
     // Main method for quick testing
     public static void main(String[] args) {
-        UserComputeAPIPrototype api = new UserComputeAPIPrototype();
+        PrototypeUserComputeAPI api = new PrototypeUserComputeAPI();
         System.out.println(api.processRequest()); // Should print: Processing request with prototype
         
         api.setInputSource("user_input");
