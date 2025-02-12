@@ -5,11 +5,15 @@ public class ComputeEngineAPI implements UserInterfaceAPI{
     public static void main(String[] args) {
         // Create scanner object to read input from user
         Scanner scanner = new Scanner(System.in);
+        
+        // Get number from UserInterfaceAPI
+        int num = UserInterfaceAPI.getUserInput(scanner); 
 
-        // Run the code for the method that calculates the square of "num"
+
+        // Run the code for the method that calculates the square of number variable 
         int square = calculateSquare(num);
 
-        // Run the code for the method that finds factors up to the square of "num"
+        // Run the code for the method that finds factors up to the square of number variable
         findFactors(num, square);
 
         // Run the code for the method to close scanner once all else is done
