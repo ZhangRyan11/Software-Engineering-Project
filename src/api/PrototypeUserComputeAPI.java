@@ -17,7 +17,7 @@ interface UserComputeAPI {
 
 // Implement the prototype class
 @NetworkAPIPrototype
-public class UserComputeAPIPrototype implements UserComputeAPI {
+public class PrototypeUserComputeAPI implements UserComputeAPI {
     private String inputSource = "default_input";
     private String outputDestination = "default_output";
     private String delimiters = ",";
