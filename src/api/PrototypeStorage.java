@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class PrototypeStorage {
 
-	public void prototype({PrototypeStorage ds) throws IOException {
+	public void prototype(PrototypeStorage ds) throws IOException {
 		
 		ComputeRequest computeRequest = new ComputeRequest(null,null,null, null);
 		
