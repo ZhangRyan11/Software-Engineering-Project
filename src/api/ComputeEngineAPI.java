@@ -1,13 +1,10 @@
 package api;
 import java.util.Scanner;
 
-public class ComputeEngineAPI implements UserInterface{
+public class ComputeEngineAPI implements UserInterfaceAPI{
     public static void main(String[] args) {
         // Create scanner object to read input from user
         Scanner scanner = new Scanner(System.in);
-
-        // Run the code for the method that gets the user's input and returns "num"
-        int num = getUserInput(scanner);
 
         // Run the code for the method that calculates the square of "num"
         int square = calculateSquare(num);
