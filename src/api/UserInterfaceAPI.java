@@ -1,13 +1,16 @@
 import java.util.*;
 
 public interface UserInterfaceAPI{
-	// Method to get a user input int 
+	// Method to get a user input integer 
     public static int getUserInput(Scanner scanner) {
-        int num = 0;
+        
+        // Run the code for the method that gets the user's input and returns "number"
+        int num = getUserInput(scanner);
+        
         // Prompt for input until a valid value is entered
         while (true) {
             try {
-                // Ask the user for an int and save it under the variable num (override 0)
+                // Ask the user for an integer and save it under the variable number (override 0)
                 System.out.print("Enter an integer greater than 0: ");
                 num = scanner.nextInt();
 
