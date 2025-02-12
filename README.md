@@ -20,7 +20,4 @@ This system calculates the factorization of input integers. For a given integer 
 3. If true, `i` is added to the list of factors.
 4. The list of factors is returned as output.
 
-## Usage
-### Running the System
-```bash
-java Main
+![Untitled Page-1](https://github.com/user-attachments/assets/c835f470-3b26-4f55-9f3f-210651e784a4)
