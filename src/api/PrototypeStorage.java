@@ -1,6 +1,7 @@
 package api;
 
 import java.io.IOException;
+import java.util.List;
 
 
 
@@ -25,7 +26,10 @@ public class PrototypeStorage {
     // Assuming these methods exist in the class
     public ReadResponse read(ReadRequest request) {
         // Implementation here
-        return new ReadResponse();
+    	ReadResponse readResponse = new ReadResponseImpl();
+    	List<Integer> data = readResponse.getData();
+		return readResponse;
+
     }
 
     public WriteResponse write(WriteRequest request) {
