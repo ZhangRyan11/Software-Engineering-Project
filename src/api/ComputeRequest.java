@@ -6,4 +6,5 @@ public interface ComputeRequest {
     String getDestinationPath();
     String[] getDelimiters();
 	String getSource();
+	String getDestination();
 }
