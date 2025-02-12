@@ -7,6 +7,7 @@ public class ComputeRequestImpl implements ComputeRequest {
     private String source;
     private String destination;
 
+    // Constructor to initialize values
     public ComputeRequestImpl(String sourcePath, String destinationPath, String[] delimiters, String source, String destination) {
         this.sourcePath = sourcePath;
         this.destinationPath = destinationPath;
@@ -15,6 +16,7 @@ public class ComputeRequestImpl implements ComputeRequest {
         this.destination = destination;
     }
 
+    // Implementing interface methods
     @Override
     public String getSourcePath() {
         return sourcePath;

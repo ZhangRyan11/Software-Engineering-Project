@@ -7,12 +7,11 @@ import java.util.List;
 
 public class PrototypeStorage {
 
-    // Constructor (if intended)
+
     public PrototypeStorage() {
-        // Initialization if needed
+
     }
 
-    // Corrected method
     public void prototype(PrototypeStorage ds) throws IOException {
         ComputeRequest computeRequest = new ComputeRequestImpl(null, null, null, null, null);
 
@@ -23,9 +22,9 @@ public class PrototypeStorage {
         WriteResponse writeResponse = ds.write(new WriteRequest(computeRequest));
     }
 
-    // Assuming these methods exist in the class
+
     public ReadResponse read(ReadRequest request) {
-        // Implementation here
+
     	ReadResponse readResponse = new ReadResponseImpl();
     	List<Integer> data = readResponse.getData();
 		return readResponse;
