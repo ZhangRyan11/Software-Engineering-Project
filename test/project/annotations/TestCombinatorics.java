@@ -1,4 +1,4 @@
-package exercise3;
+package project.annotations;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
