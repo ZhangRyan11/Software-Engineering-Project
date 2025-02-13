@@ -12,6 +12,14 @@ public class TestAddingMachine {
 		AddingMachine testAddingMachine = new AddingMachine();
 		checkComputation(2, 3, testAddingMachine);
 	}
+	@Test
+	public void testBroken()
+	{
+		AddingMachine testAddingMachine = new AddingMachine();
+		checkComputation(-352062188,-1847933840, testAddingMachine);
+		
+	}
+	
 
 	@Test
 	public void testFuzzyAdding() {
