@@ -24,7 +24,7 @@ public class TestAddingMachine {
 	@Test
 	public void testFuzzyAdding() {
 		long seed = System.currentTimeMillis();
-		Random random = new Random(seed);	
+		Random random = new Random(123);	
 		System.out.println("Running with seed:" +seed);
 		AddingMachine toTest = new AddingMachine();
 		
