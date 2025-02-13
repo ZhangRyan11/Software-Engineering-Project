@@ -1,3 +1,5 @@
+package project.annotations;
+
 import java.util.*;
 
 public class WrappedHashMap {
