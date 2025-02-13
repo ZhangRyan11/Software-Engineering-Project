@@ -13,16 +13,17 @@ public class WrappedHashMap {
 		return data.get(id);
 	}
 	
-		public void put(int id, String value)
-	{
-		if(needToInitialize)
-		{
+		public void put(int id, String value){
+		if(needToInitialize){
 			initalize();
 			needToInitialize = false;
+			}
+		data.put(id, value);
+	
 		}
-	data.put(id, value);
-	}
+		
 		private void initalize() {
 			int initialCapacity = 10;
 			data = new HashMap<>(initialCapacity);
 		}
+}
