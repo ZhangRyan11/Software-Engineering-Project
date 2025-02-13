@@ -1,26 +1,28 @@
-package project.annotations;
+import java.util.*;
 
 public class WrappedHashMap {
-private map<Integer, String> data;
-private boolean needToInitialize;
+	
+	private Map<Integer, String> data;
+	private boolean needToInitialize;
 
-public string get(int id)
-{
-	if(needToInitialize)
-	{
-		initialize();
-		needToInitialize = false;
+	public String get(int id){
+		if(needToInitialize){
+			initalize();
+			needToInitialize = false;
+		}
+		return data.get(id);
 	}
-	return data.get(id);
-}
-public void put(int id, string value)
-{
-	if(needToInitialize)
+	
+		public void put(int id, String value)
 	{
-		initialize();
-		needToInitialize = false;
+		if(needToInitialize)
+		{
+			initalize();
+			needToInitialize = false;
+		}
+	data.put(id, value);
 	}
-	return data.get(id);
-}
-data.put(id, value);
-}
+		private void initalize() {
+			int initialCapacity = 10;
+			data = new HashMap<>(initialCapacity);
+		}
