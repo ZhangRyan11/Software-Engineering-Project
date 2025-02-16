@@ -9,8 +9,9 @@ public class IntegrationTest {
 
     @Before
     public void setUp() {
-        storage = new InMemoryStorageAPI();
+        storage = new ConcreteInMemoryStorageAPI();
     }
+
 
     @Test
     public void testInMemoryStorage() {

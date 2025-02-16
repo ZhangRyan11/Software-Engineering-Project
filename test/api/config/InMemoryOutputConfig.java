@@ -3,6 +3,8 @@ package api.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import api.StorageResponse;
+
 public class InMemoryOutputConfig implements StorageResponse {
     private List<String> outputData;
 
@@ -18,7 +20,6 @@ public class InMemoryOutputConfig implements StorageResponse {
         return outputData;
     }
 
-    @Override
     public String getDestination() {
         return "memory";
     }

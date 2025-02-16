@@ -3,9 +3,9 @@ package api;
 import api.config.InMemoryInputConfig;
 import api.config.InMemoryOutputConfig;
 
-public class InMemoryStorageAPI implements StorageAPI {
-    private InMemoryInputConfig inputConfig;
-    private InMemoryOutputConfig outputConfig;
+public abstract class InMemoryStorageAPI implements StorageAPI {
+    public InMemoryInputConfig inputConfig;
+    public InMemoryOutputConfig outputConfig;
 
     public InMemoryStorageAPI() {
         this.inputConfig = new InMemoryInputConfig();
