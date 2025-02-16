@@ -6,7 +6,7 @@ import java.util.List;
 import api.StorageAPI;
 import api.StorageRequest;
 
-public abstract class InMemoryInputConfig implements StorageAPI, StorageRequest {
+public class InMemoryInputConfig implements StorageRequest {
     private List<Integer> inputData;
 
     public InMemoryInputConfig() {
@@ -21,7 +21,6 @@ public abstract class InMemoryInputConfig implements StorageAPI, StorageRequest 
         return inputData;
     }
 
-    @Override
     public String getSource() {
         return "memory";
     }

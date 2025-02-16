@@ -3,7 +3,7 @@ package api;
 import api.config.InMemoryInputConfig;
 import api.config.InMemoryOutputConfig;
 
-public abstract class InMemoryStorageAPI implements StorageAPI {
+public class InMemoryStorageAPI implements StorageAPI {
     public InMemoryInputConfig inputConfig;
     public InMemoryOutputConfig outputConfig;
 
@@ -32,4 +32,10 @@ public abstract class InMemoryStorageAPI implements StorageAPI {
     public InMemoryOutputConfig getOutputConfig() {
         return outputConfig;
     }
+
+	@Override
+	public String getSource() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
