@@ -1,4 +1,4 @@
-package project.annotations;
+package api.config;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import java.util.*;
