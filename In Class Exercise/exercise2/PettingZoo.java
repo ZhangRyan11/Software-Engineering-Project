@@ -21,4 +21,8 @@ public class PettingZoo {
 		animals.get(animalIndex).tryToPet();
 	}
 	
+	PettingZoo zoo = new PettingZoo();
+	zoo.addAnimalToZoo(new FriendlyAnimalWrapper(new Goat()));
+	zoo.addAnimalToZoo(new FriendlyAnimalWrapper(new HoneyBadger()));
+
 }
