@@ -1,6 +1,9 @@
 package api.config;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+
+import api.ComputeEngineAPI;
+
 import java.util.*;
 
 public class ComputeEngineIntegrationTest {
