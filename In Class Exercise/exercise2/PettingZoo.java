@@ -5,10 +5,10 @@ import java.util.List;
 
 public class PettingZoo {
 
-	private List<Animal> animals = new ArrayList<>();
+	private List<SafeAnimal> animals = new ArrayList<>();
 	
 	public void addAnimalToZoo(Animal animal) {
-		animals.add(animal);
+		animals.add(new SafeAnimal(animal));
 	}
 	
 	public void visitZoo() {

@@ -1,5 +1,5 @@
 package api;
-import java.util.*;
+import java.util.Scanner;
 
 public interface UserInterfaceAPI{
 	// Method to get a user input integer 
