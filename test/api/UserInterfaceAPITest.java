@@ -1,7 +1,7 @@
 package api;
 import java.util.Scanner;
 
-public interface UserInterfaceAPI{
+public interface UserInterfaceAPITest{
 	// Method to get a user input integer 
     public static int getUserInput(Scanner scanner) {
         
