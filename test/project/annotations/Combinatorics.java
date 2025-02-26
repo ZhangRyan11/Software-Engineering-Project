@@ -23,7 +23,7 @@ public class Combinatorics {
 	// Ex: 3! = factorial(3) = 1 * 2 * 3 = 6
 	private int factorial(int n) {
 		int product = 1;
-		for (int i = 0; i < n; i++) {
+		for (int i = 1; i < n; i++) {
 			product *= i;
 		}
 		return product;
