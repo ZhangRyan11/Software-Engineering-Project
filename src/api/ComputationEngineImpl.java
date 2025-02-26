@@ -1,10 +1,10 @@
 package api;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ComputationEngineImpl implements ComputationAPI {
     @Override
+    // compute takes input number and returns the computation result
     public ComputationResult compute(String inputData, String[] delimiters) {
         try {
             int number = parseInput(inputData);
@@ -15,10 +15,12 @@ public class ComputationEngineImpl implements ComputationAPI {
         }
     }
 
+    // trims extra white space in inputs
     private int parseInput(String input) {
         return Integer.parseInt(input.trim());
     }
 
+    // method to find all factors of given number
     private List<Integer> findFactors(int number) {
         List<Integer> factors = new ArrayList<>();
         int square = number * number;
