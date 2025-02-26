@@ -19,8 +19,7 @@ public class IntegrationTest {
         storage.getInputConfig().addInput(2);
         storage.getInputConfig().addInput(3);
 
-        // Perform storage operations
-        StorageResponse response = storage.readData(storage.getInputConfig());
+        storage.readData(storage.getInputConfig());
         storage.writeData("memory", "Test Output 1");
         storage.writeData("memory", "Test Output 2");
 

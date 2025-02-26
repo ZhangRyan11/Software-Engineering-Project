@@ -3,7 +3,6 @@ package api.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import api.StorageAPI;
 import api.StorageRequest;
 
 public class InMemoryInputConfig implements StorageRequest {

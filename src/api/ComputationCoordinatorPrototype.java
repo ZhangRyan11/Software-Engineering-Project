@@ -14,14 +14,7 @@ public class ComputationCoordinatorPrototype {
     }
 
     public static class ComputeRequest {
-        private final InputConfig inputConfig;
-        private final OutputConfig outputConfig;
-        private final char delimiter;
-
         public ComputeRequest(InputConfig inputConfig, OutputConfig outputConfig, char delimiter) {
-            this.inputConfig = inputConfig;
-            this.outputConfig = outputConfig;
-            this.delimiter = delimiter;
         }
     }
 

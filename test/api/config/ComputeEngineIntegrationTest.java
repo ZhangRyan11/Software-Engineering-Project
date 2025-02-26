@@ -13,8 +13,8 @@ public class ComputeEngineIntegrationTest {
     public void testSimpleSquare() {
         int num = 5;
         int expectedSquare = num * num;
-        ComputeEngineAPI toTest = new ComputeEngineAPI();
-        int actualSquare = toTest.calculateSquare(num);
+        new ComputeEngineAPI();
+        int actualSquare = ComputeEngineAPI.calculateSquare(num);
         Assert.assertEquals(expectedSquare, actualSquare);
     }
 
@@ -22,8 +22,8 @@ public class ComputeEngineIntegrationTest {
     @Test
     public void testFactorsOfSmallNumber() {
         int num = 6;
-        ComputeEngineAPI toTest = new ComputeEngineAPI();
-        int square = toTest.calculateSquare(num);
+        new ComputeEngineAPI();
+        int square = ComputeEngineAPI.calculateSquare(num);
     // Manually calculated factors of 6 up to 36
         String expectedFactors = "1 2 3 6 ";
         String actualFactors = getFactorsAsString(num, square);
@@ -34,8 +34,8 @@ public class ComputeEngineIntegrationTest {
     @Test
     public void testFactorsOfLargeNumber() {
         int num = 15;
-        ComputeEngineAPI toTest = new ComputeEngineAPI();
-        int square = toTest.calculateSquare(num);
+        new ComputeEngineAPI();
+        int square = ComputeEngineAPI.calculateSquare(num);
     // Manually calculated factors of 15 up to 225
         String expectedFactors = "1 3 5 15 ";
         String actualFactors = getFactorsAsString(num, square);
@@ -48,13 +48,13 @@ public class ComputeEngineIntegrationTest {
         long seed = System.currentTimeMillis();
         Random random = new Random(seed);
         System.out.println("Running with seed: " + seed);
-        ComputeEngineAPI toTest = new ComputeEngineAPI();
+        new ComputeEngineAPI();
 
         for (int i = 0; i < 100; i++) {
     // Getting random numbers between 1 and 100
             int val = random.nextInt(100) + 1;
             int expectedSquare = val * val;
-            int actualSquare = toTest.calculateSquare(val);
+            int actualSquare = ComputeEngineAPI.calculateSquare(val);
             Assert.assertEquals(expectedSquare, actualSquare);
         }
     }
@@ -81,12 +81,11 @@ public class ComputeEngineIntegrationTest {
             System.out.println();
         }
 
-    // Call to test numbers
-        ComputeEngineAPI toTest = new ComputeEngineAPI();
+    new ComputeEngineAPI();
 
         for (int num : inputNumbers) {
     // Calculate square
-            int square = toTest.calculateSquare(num);
+            int square = ComputeEngineAPI.calculateSquare(num);
             System.out.println("Square of " + num + " is " + square);
 
     // Find and print factors
