@@ -12,7 +12,7 @@ public class UserComputeAPITest {
     private UserComputeAPIPrototype api;
     private File testFile;
     
-    // Initializes API instance and creates a temporary test file.
+    //Initializes API instance and creates a temporary test file.
     @Before
     public void setup() throws IOException {
         api = new UserComputeAPIPrototype();
@@ -26,4 +26,9 @@ public class UserComputeAPITest {
         api.setInputSource(null);
     }
     
+     // Test case to verify that setting an empty or whitespace-only input source
+    @Test(expected = ValidationException.class)
+    public void testEmptyInputSource() {
+        api.setInputSource("   ");
+    }
 }
