@@ -20,5 +20,10 @@ public class UserComputeAPITest {
         testFile.deleteOnExit();
     }
 
-
+    //Test case to verify that setting a null input source throws ValidationException.
+    @Test(expected = ValidationException.class)
+    public void testNullInputSource() {
+        api.setInputSource(null);
+    }
+    
 }
