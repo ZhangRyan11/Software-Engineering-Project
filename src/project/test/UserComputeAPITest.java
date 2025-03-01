@@ -21,14 +21,25 @@ public class UserComputeAPITest {
     }
 
     //Test case to verify that setting a null input source throws ValidationException.
-    @Test(expected = ValidationException.class)
+    @Test
+    (expected = ValidationException.class)
     public void testNullInputSource() {
         api.setInputSource(null);
     }
     
-     // Test case to verify that setting an empty or whitespace-only input source
-    @Test(expected = ValidationException.class)
+     //Test case to verify that setting an empty or whitespace-only input source
+    @Test
+    (expected = ValidationException.class)
     public void testEmptyInputSource() {
         api.setInputSource("   ");
     }
+
+     //Test case to verify that setting a valid file path as input source is accepted.
+    
+    @Test
+    public void testValidInputSource() {
+        api.setInputSource(testFile.getAbsolutePath());
+    }
+
+
 }
