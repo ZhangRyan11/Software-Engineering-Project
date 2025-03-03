@@ -1,4 +1,3 @@
-
-public class Sizeable {
-
+public interface Sizeable {
+    int getSize();
 }
