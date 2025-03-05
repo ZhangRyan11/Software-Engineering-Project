@@ -2,7 +2,7 @@ package api;
 import project.exceptions.ValidationException;
 import java.io.File;
 
-public class UserComputeAPIPrototype {
+public class UserComputeAPIException{
     // Getting 3 blank variables to use later
     private String inputSource;
     private String outputDestination;
