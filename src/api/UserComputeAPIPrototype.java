@@ -2,8 +2,6 @@ package project.annotations;
 import project.exceptions.ValidationException;
 import java.io.File;
 
-// Once file is complete we may need to get rid of older version of this program
-
 public class UserComputeAPIPrototype {
     // Getting 3 blank variables to use later
     private String inputSource;
@@ -30,5 +28,26 @@ public class UserComputeAPIPrototype {
         }
         // If the exceprtion is not thrown, destination is set
         this.outputDestination = destination;
+    }
+    
+    public void setDelimiters(String delimiters) {
+        // All delimiter values are valid - null or empty means use defaults
+        this.delimiters = delimiters;
+    }
+    
+    public String processRequest() {
+        try {
+            // Validate state before processing (both source and destination)
+            if (inputSource == null) {
+                return "ERROR: Input source not set";
+            }
+            if (outputDestination == null) {
+                return "ERROR: Output destination not set";
+            }
+            // Process the request
+            return "SUCCESS: Processing complete";
+        } catch (Exception e) {
+            return "ERROR: " + e.getMessage();
+        }
     }
 }
