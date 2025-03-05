@@ -1,4 +1,4 @@
-package project.annotations;
+package api;
 import project.exceptions.ValidationException;
 import java.io.File;
 
@@ -22,11 +22,11 @@ public class UserComputeAPIPrototype {
     }
     
     public void setOutputDestination(String destination) {
-        // Thows same exception from earlier not allowing destination to be null or empty
+        // Throws same exception from earlier not allowing destination to be null or empty
         if (destination == null || destination.trim().isEmpty()) {
             throw new ValidationException("Output destination cannot be null or empty");
         }
-        // If the exceprtion is not thrown, destination is set
+        // If the exception is not thrown, destination is set
         this.outputDestination = destination;
     }
     
