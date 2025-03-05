@@ -2,6 +2,8 @@ package project.annotations;
 import project.exceptions.ValidationException;
 import java.io.File;
 
+// Once file is complete we may need to get rid of older version of this program
+
 public class UserComputeAPIPrototype {
     // Getting 3 blank variables to use later
     private String inputSource;
