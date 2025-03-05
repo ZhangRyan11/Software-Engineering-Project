@@ -1,8 +1,7 @@
 package project.test;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
-import project.annotations.UserComputeAPIPrototype;
+
 
 public class IntegrationTest {
     
