@@ -1,9 +1,9 @@
-package project.test;
+package api;
 
 import org.junit.jupiter.api.Test;
 
 
-public class IntegrationTest {
+public class ExceptionsIntegrationTest {
     
     @Test
     public void testExceptionHandlingAcrossComponents() {
