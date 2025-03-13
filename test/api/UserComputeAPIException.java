@@ -1,5 +1,4 @@
 package api;
-import project.exceptions.ValidationException;
 import java.io.File;
 
 public class UserComputeAPIException{

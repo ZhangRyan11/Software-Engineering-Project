@@ -1,10 +1,10 @@
-package project.test;
+package api;
 
-import org.junit.Test;
 import org.junit.Before;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import project.annotations.UserComputeAPIPrototype;
-import project.exceptions.ValidationException;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -22,16 +22,18 @@ public class UserComputeAPITest {
 
     //Test case to verify that setting a null input source throws ValidationException.
     @Test
-    (expected = ValidationException.class)
     public void testNullInputSource() {
-        api.setInputSource(null);
+        assertThrows(ValidationException.class, () -> {
+            api.setInputSource(null);
+        });
     }
     
      //Test case to verify that setting an empty or whitespace-only input source
     @Test
-    (expected = ValidationException.class)
     public void testEmptyInputSource() {
-        api.setInputSource("   ");
+    	assertThrows(ValidationException.class, () -> {
+            api.setInputSource("   ");
+        });
     }
 
      //Test case to verify that setting a valid file path as input source is accepted.
@@ -43,8 +45,8 @@ public class UserComputeAPITest {
     //Test case to verify error handling during processing
     @Test
     public void testProcessRequestErrorHandling(){
-        String result = api.processsRequest();
-        assertTrue(result.startWith("ERROR: "));
+        String result = api.processRequest();
+        assertTrue(result.startsWith("ERROR: "));
     }
 
 }
