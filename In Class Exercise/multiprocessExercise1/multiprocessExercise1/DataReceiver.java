@@ -23,9 +23,6 @@ public class DataReceiver {
 	}
 
 	private static void readFileContents(BufferedReader reader) throws IOException {
-		 String line;
-		    while ((line = reader.readLine()) != null) {
-		        System.out.println(line);
-		    }
+		// TODO: read in the file, print it out to the console
 	}
 }

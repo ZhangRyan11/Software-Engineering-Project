@@ -1,4 +1,4 @@
-package exercise4;
+package threading-exercise4(1) (1);
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

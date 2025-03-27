@@ -25,7 +25,6 @@ public class DataSender {
 	}
 
 	private static void writeFileContents(FileWriter writer) throws IOException {
-		writer.write("Hello from DataSender!\n");
-	    writer.write("This is a test of inter-process communication.");
+		// TODO: write some data to the writer
 	}
 }
