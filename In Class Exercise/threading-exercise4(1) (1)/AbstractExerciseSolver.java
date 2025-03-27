@@ -1,4 +1,4 @@
-package exercise4;
+package threading-exercise4(1) (1);
 
 // Pay no attention to the man behind the curtain
 public abstract class AbstractExerciseSolver {
