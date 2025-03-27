@@ -5,6 +5,14 @@ public class ExerciseSolver extends AbstractExerciseSolver {
 	public int practiceQuestions(int numPracticeQuestions) throws Exception {
 		int numSolved = 0;
 		
+		Callable<Void> execisePhase = () -> {
+			Execise 
+		}
+		
+		Callable<Void> solvePhase = () -> {
+			
+		}
+		
 		// TODO: Create a pipeline with 2 stages that can run at once: 
 		// creating the exercise and solving the exercise
 		for (int i = 0; i < numPracticeQuestions; i++) {
