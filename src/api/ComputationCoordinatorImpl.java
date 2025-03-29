@@ -22,12 +22,12 @@ public class ComputationCoordinatorImpl implements ComputationCoordinator {
             if (result.isSuccess()) {
                 String outputData = formatOutput(result.getFactors());
                 dataStorage.writeData(request.getDestinationPath(), outputData);
-                return new ComputeResult(true, null);
+                return new ComputeResponseImpl(true, null);
             }
             
-            return new ComputeResult(false, "Computation failed");
+            return new ComputeResponseImpl(false, "Computation failed");
         } catch (Exception e) {
-            return new ComputeResult(false, e.getMessage());
+            return new ComputeResponseImpl(false, e.getMessage());
         }
     }
 
