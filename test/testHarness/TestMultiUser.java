@@ -1,4 +1,4 @@
-package edu.softwareeng.sample;
+package testHarness;
 
 import java.io.File;
 import java.io.IOException;
