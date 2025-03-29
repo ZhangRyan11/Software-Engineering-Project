@@ -1,6 +1,7 @@
 package api;
 
-import java.io.*;
+import java.io.IOException;
+
 
 public interface DataStorage {
     String readData(String source, String[] delimiters) throws IOException;

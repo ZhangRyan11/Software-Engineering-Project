@@ -1,7 +1,6 @@
 package project.annotations;
 
 import java.util.Random;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
@@ -12,12 +11,11 @@ public class TestAddingMachine {
 		AddingMachine testAddingMachine = new AddingMachine();
 		checkComputation(2, 3, testAddingMachine);
 	}
+	
 	@Test
-	public void testBroken()
-	{
+	public void testBroken(){
 		AddingMachine testAddingMachine = new AddingMachine();
 		checkComputation(-352062188,-1847933840, testAddingMachine);
-		
 	}
 	
 
@@ -28,8 +26,7 @@ public class TestAddingMachine {
 		System.out.println("Running with seed:" +seed);
 		AddingMachine toTest = new AddingMachine();
 		
-		for(int i=0;i<100;i++)
-		{
+		for(int i=0;i<100;i++){
 			int val1 = random.nextInt();
 			int val2 = random.nextInt();
 			checkComputation(val1, val2, toTest);

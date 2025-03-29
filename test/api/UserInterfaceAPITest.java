@@ -1,17 +1,14 @@
 package api;
 import java.util.Scanner;
 
-public interface UserInterfaceAPITest{
-	// Method to get a user input integer 
+public interface UserInterfaceAPITest {
+    // Method to get a user input integer 
     public static int getUserInput(Scanner scanner) {
-        
-        // Run the code for the method that gets the user's input and returns "number"
-        int num = getUserInput(scanner);
-        
-        // Prompt for input until a valid value is entered
+        int num; // No recursive call
+
         while (true) {
             try {
-                // Ask the user for an integer and save it under the variable number (override 0)
+                // Ask the user for an integer
                 System.out.print("Enter an integer greater than 0: ");
                 num = scanner.nextInt();
 
@@ -20,15 +17,14 @@ public interface UserInterfaceAPITest{
                     throw new IllegalArgumentException("Invalid value. Integer must be greater than 0.");
                 }
                 
-                // When value is valid, break out of the loop
-                break;
-            }   
-            catch (IllegalArgumentException e) {
-                // Catch the exception and print an error message
+                break; // Exit loop when valid input is given
+            } catch (IllegalArgumentException e) { 
                 System.out.println(e.getMessage());
+            } catch (Exception e) { 
+                System.out.println("Invalid input. Please enter a valid integer.");
+                scanner.next(); // Consume invalid input
             }
         }
         return num; 
     }
-	
 }
