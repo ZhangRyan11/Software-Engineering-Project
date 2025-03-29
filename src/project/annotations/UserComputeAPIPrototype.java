@@ -13,7 +13,9 @@ public class UserComputeAPIPrototype {
     	
     }
     
-    public String processRequest() { return "Processing request with prototype"; }
+    public String processRequest() { 
+    	return "Processing request with prototype"; 
     }
+}
     
     
