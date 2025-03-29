@@ -1,4 +1,4 @@
-package project.api;
+package project.annotations;
 
 import java.io.File;
 import java.io.PrintWriter;

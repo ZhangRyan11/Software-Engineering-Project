@@ -1,8 +1,5 @@
 package coordinator;
 
-import project.annotations.NetworkAPI;
-
-@NetworkAPI
 public interface NetworkAPI {
     /**
      * Starts a computation job with the given input path, output path, and delimiter.
