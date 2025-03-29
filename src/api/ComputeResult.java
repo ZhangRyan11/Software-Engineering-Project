@@ -8,7 +8,7 @@ public class ComputeResult{
     }
 
     public ComputeResult(boolean b, Object message2) {
-		// TODO Auto-generated constructor stub
+        
 	}
 
 	public enum ComputeResultStatus {
