@@ -10,19 +10,28 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import coordinator.NetworkAPI;  // Import the NetworkAPI interface
-import coordinator.Coordinator; // Import your Coordinator implementation
+import coordinator.MultiThreadedCoordinator; // Import your multi-threaded implementation
 
 public class TestMultiUser {
 	
 	private NetworkAPI coordinator;
+	private MultiThreadedCoordinator multiThreadedCoordinator;
 	
 	@BeforeEach
 	public void initializeComputeEngine() {
-		coordinator = new Coordinator();
+		multiThreadedCoordinator = new MultiThreadedCoordinator();
+		coordinator = multiThreadedCoordinator;
+	}
+	
+	@AfterEach
+	public void cleanup() {
+		// Shut down the executor service to prevent thread leakage
+		multiThreadedCoordinator.shutdown();
 	}
 
 	@Test
