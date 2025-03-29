@@ -1,19 +1,6 @@
 package api;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-// Define the annotation for marking prototype classes
-@Retention(RetentionPolicy.RUNTIME)
-@interface NetworkAPIPrototype {}
-
-// Define the interface that the prototype implements
-interface UserComputeAPI {
-    void setInputSource(String source);
-    void setOutputDestination(String destination);
-    void setDelimiters(String delimiters);
-    String processRequest();
-}
+import project.annotations.NetworkAPIPrototype;
 
 // Implement the prototype class
 @NetworkAPIPrototype
@@ -51,11 +38,11 @@ public class PrototypeUserComputeAPI implements UserComputeAPI {
     public static void main(String[] args) {
         PrototypeUserComputeAPI api = new PrototypeUserComputeAPI();
         System.out.println(api.processRequest()); // Should print: Processing request with prototype
-        
+
         api.setInputSource("user_input");
         api.setOutputDestination("user_output");
         api.setDelimiters(";");
-        
+
         System.out.println(api.getStatus()); // Should reflect updated values
     }
 }
