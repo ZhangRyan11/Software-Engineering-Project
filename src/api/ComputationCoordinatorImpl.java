@@ -19,8 +19,8 @@ public class ComputationCoordinatorImpl implements ComputationCoordinator {
             ComputationResult result = computeEngine.compute(inputData, request.getDelimiters());
             
             // Write results if computation was successful
-            if (result instanceof ComputationResultImpl && ((ComputationResultImpl) result).isSuccess()) {
-                String outputData = formatOutput(((ComputationResultImpl) result).getFactors());
+            if (result.isSuccess()) {
+                String outputData = formatOutput(result.getFactors());
                 dataStorage.writeData(request.getDestinationPath(), outputData);
                 return new ComputeResponseImpl(true, null);
             }
