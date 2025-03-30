@@ -2,7 +2,7 @@ package api;
 
 import java.util.List;
 
-public class ComputationResultImpl implements ComputationResult {
+class ComputationResultImpl implements ComputationResult {
     private final boolean success;
     private final List<Integer> factors;
 
