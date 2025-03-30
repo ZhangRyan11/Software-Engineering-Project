@@ -10,20 +10,28 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import coordinator.NetworkAPI;  // Import the NetworkAPI interface
+import coordinator.MultiThreadedCoordinator; // Import your multi-threaded implementation
+
 public class TestMultiUser {
 	
-	// TODO 1: change the type of this variable to the name you're using for your @NetworkAPI
-	// interface
-	private ComputationCoordinator coordinator;
+	private NetworkAPI coordinator;
+	private MultiThreadedCoordinator multiThreadedCoordinator;
 	
 	@BeforeEach
 	public void initializeComputeEngine() {
-		//TODO 2: create an instance of the implementation of your @NetworkAPI; this is the component
-		// that the user will make requests to
-		// Store it in the 'coordinator' instance variable
+		multiThreadedCoordinator = new MultiThreadedCoordinator();
+		coordinator = multiThreadedCoordinator;
+	}
+	
+	@AfterEach
+	public void cleanup() {
+		// Shut down the executor service to prevent thread leakage
+		multiThreadedCoordinator.shutdown();
 	}
 
 	@Test

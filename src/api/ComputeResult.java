@@ -1,27 +1,19 @@
 package api;
 
-public class ComputeResult{
-    private ComputeResultStatus status;
-    private String message;
+import java.util.List;
 
-    public ComputeResult(ComputeResultStatus status, String message) {
-        this.status = status;
-        this.message = message;
-    }
-
-    public enum ComputeResultStatus {
+public interface ComputeResult {
+    boolean isSuccess();
+    List<Integer> getFactors();
+    String getErrorMessage();
+    
+    // Enum can be kept as a nested type within the interface
+    enum ComputeResultStatus {
         SUCCESS(true), FAILURE(false), INVALID_REQUEST(false);
         public boolean isSuccess;
         private ComputeResultStatus(boolean isSuccess) {
             this.isSuccess = isSuccess;
         }
-    }
-
-    public boolean isSuccess() {
-        return status.isSuccess;
-    }
-    public String getMessage() {
-        return message;
     }
 }
 
