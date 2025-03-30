@@ -1,5 +1,7 @@
 package project.annotations;
 
-public class MyNetworkAPI {
+public interface MyNetworkAPI {
+
+	void doTask(String outputPath);
 
 }

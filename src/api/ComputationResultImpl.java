@@ -2,20 +2,21 @@ package api;
 
 import java.util.List;
 
-class ComputationResultImpl implements ComputationResult {
+public class ComputeResponseImpl implements ComputeResult {
     private final boolean success;
-    private final List<Integer> factors;
+    private final String errorMessage;
 
-    public ComputationResultImpl(boolean success, List<Integer> factors) {
-        this.success = success;
-        this.factors = factors;
+
     }
 
-    public boolean isSuccess() {
-        return success;
-    }
-
+    @Override
     public List<Integer> getFactors() {
-        return factors;
+        // Since this class represents a response rather than actual computation results,
+        // we can return null or an empty list if success is false
+        return null;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
     }
 }
