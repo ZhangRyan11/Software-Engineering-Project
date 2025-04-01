@@ -1,5 +1,8 @@
 package api;
 
-public interface ComputationResult {
+import java.util.List;
 
+public interface ComputationResult {
+    boolean isSuccess();
+    List<Integer> getFactors();
 }
