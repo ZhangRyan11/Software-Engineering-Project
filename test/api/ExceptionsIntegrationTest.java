@@ -12,7 +12,7 @@ public class ExceptionsIntegrationTest {
     
     @Test
     public void testExceptionHandlingAcrossComponents() {
-        UserComputeAPIPrototype api = new UserComputeAPIPrototype();
+        UserComputeAPIException api = new UserComputeAPIException();
         
         // Configure with invalid path to trigger exception
         api.setInputSource("nonexistent/file.txt");

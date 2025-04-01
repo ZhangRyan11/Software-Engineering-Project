@@ -1,6 +1,7 @@
 package api;
 
-import org.junit.Before;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,7 +17,7 @@ public class UserComputeAPITest {
     private File testFile;
     
     //Initializes API instance and creates a temporary test file.
-    @Before
+    @BeforeEach
     public void setup() throws IOException {
         api = new UserComputeAPIPrototype();
         testFile = File.createTempFile("test", ".txt");

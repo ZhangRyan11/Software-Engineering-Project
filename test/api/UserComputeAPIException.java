@@ -1,7 +1,7 @@
 package api;
 import java.io.File;
 
-public class UserComputeAPIException{
+public class UserComputeAPIException implements UserComputeAPI{
     // Getting 3 blank variables to use later
     private String inputSource;
     private String outputDestination;
