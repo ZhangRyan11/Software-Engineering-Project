@@ -6,6 +6,7 @@ public interface UserInterfaceAPITest {
     public static int getUserInput(Scanner scanner) {
         int num; // No recursive call
 
+        
         while (true) {
             try {
                 // Ask the user for an integer
