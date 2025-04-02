@@ -43,7 +43,7 @@ public class UserComputeAPITest {
 
      //Test case to verify that setting a valid file path as input source is accepted.
     @Test
-    public void testValidInputSource() throws ValidationException {
+    public void testValidInputSource() {
         try {
             api.setInputSource(testFile.getAbsolutePath());
         } catch (ValidationException e) {
@@ -60,7 +60,7 @@ public class UserComputeAPITest {
 
     //Test case to verify setting a valid input source with exception handling
     @Test
-    public void testSetInputSource() throws ValidationException {
+    public void testSetInputSource() {
         try {
             api.setInputSource(testFile.getAbsolutePath());
         } catch (ValidationException e) {
