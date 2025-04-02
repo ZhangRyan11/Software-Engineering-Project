@@ -44,11 +44,7 @@ public class UserComputeAPITest {
      //Test case to verify that setting a valid file path as input source is accepted.
     @Test
     public void testValidInputSource() {
-        try {
-            api.setInputSource(testFile.getAbsolutePath());
-        } catch (ValidationException e) {
-            fail("ValidationException was thrown: " + e.getMessage());
-        }
+        api.setInputSource(testFile.getAbsolutePath());
     }
 
     //Test case to verify error handling during processing
