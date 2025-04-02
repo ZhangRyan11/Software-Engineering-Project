@@ -1,23 +1,26 @@
 package api;
 
 import project.annotations.UserComputeAPIPrototype;
-import api.ValidationException;
+
+//Implementation of UserComputeAPIPrototype that specifically handles exceptions
 
 public class UserComputeAPIException extends UserComputeAPIPrototype {
-
-    @Override
-    public void setInputSource(String source) {
-        try {
-            super.setInputSource(source);
-        } catch (ValidationException e) {
-            this.validationError = e.getMessage();
-        }
-    }
     
     // Add a field to store validation errors
     private String validationError = null;
     
-    // Override to catch and report any validation exceptions
+    // Override to handle ValidationException internally rather than propagating
+    
+    @Override
+    public void setInputSource(String source) {
+        try {
+            super.setInputSource(source);
+        } catch (Exception e) {
+            // Catch any exception, including ValidationException
+            // Store the message to report it later
+            this.validationError = e.getMessage();
+        }
+    }
     
     @Override
     public String processRequest() {
