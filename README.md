@@ -21,7 +21,6 @@ The `TestMultiUser` class now uses the multi-threaded implementation for testing
 
 Regular smoke tests still use the single-threaded implementation to ensure deterministic behavior during basic testing.
 
-## Computation Description# Integer Computation System
 
 ## Computation Description
 
