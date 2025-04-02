@@ -23,7 +23,6 @@ public class ExceptionsIntegrationTest {
             // Verify exception is caught and converted to error message
             String result = api.processRequest();
             assertTrue(result.startsWith("ERROR:"));
-            // Fix the parameter order - message should be the second parameter
             assertFalse("Exception should not propagate", result.contains("ValidationException"));
         } catch (ValidationException e) {
             fail("ValidationException should be handled internally: " + e.getMessage());
