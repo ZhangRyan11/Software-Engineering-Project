@@ -4,7 +4,7 @@ import project.annotations.UserComputeAPIPrototype;
 
 //Implementation of UserComputeAPIPrototype that specifically handles exceptions
 
-public class UserComputeAPIException extends UserComputeAPIPrototype {
+public class UserComputeAPIExceptionHandler extends UserComputeAPIPrototype {
     
     // Add a field to store validation errors
     private String validationError = null;
