@@ -5,6 +5,7 @@ public class UserComputeAPIException implements UserComputeAPI{
     // Getting 3 blank variables to use later
     private String inputSource;
     private String outputDestination;
+    
     public void setInputSource(String source) throws ValidationException {
         // Below 2 lines are exception to not allow a null or empty source
         if (source == null || source.trim().isEmpty()) {
