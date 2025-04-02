@@ -11,7 +11,7 @@ public class UserComputeAPIException extends UserComputeAPIPrototype {
      * Override to handle ValidationException internally rather than propagating
      */
     @Override
-    public void setInputSource(String source) {
+    public void setInputSource(String source) throws ValidationException {
         try {
             super.setInputSource(source);
         } catch (ValidationException e) {
