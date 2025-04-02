@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import project.annotations.UserComputeAPIPrototype;
 
 
@@ -51,6 +52,16 @@ public class UserComputeAPITest {
     public void testProcessRequestErrorHandling(){
         String result = api.processRequest();
         assertTrue(result.startsWith("ERROR: "));
+    }
+
+    //Test case to verify setting a valid input source with exception handling
+    @Test
+    public void testSetInputSource() {
+        try {
+            api.setInputSource(testFile.getAbsolutePath());
+        } catch (ValidationException e) {
+            fail("ValidationException was thrown: " + e.getMessage());
+        }
     }
 
 }
