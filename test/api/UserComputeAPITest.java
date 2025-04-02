@@ -1,13 +1,12 @@
 package api;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import project.annotations.UserComputeAPIPrototype;
-
-
+import project.annotations.ValidationException;  // Updated import to use the correct package
 
 import java.io.File;
 import java.io.IOException;
@@ -42,8 +41,12 @@ public class UserComputeAPITest {
 
      //Test case to verify that setting a valid file path as input source is accepted.
     @Test
-    public void testValidInputSource() throws project.annotations.ValidationException {
-        api.setInputSource(testFile.getAbsolutePath());
+    public void testValidInputSource() throws ValidationException {
+        try {
+            api.setInputSource(testFile.getAbsolutePath());
+        } catch (ValidationException e) {
+            fail("ValidationException was thrown: " + e.getMessage());
+        }
     }
 
     //Test case to verify error handling during processing
@@ -51,6 +54,16 @@ public class UserComputeAPITest {
     public void testProcessRequestErrorHandling(){
         String result = api.processRequest();
         assertTrue(result.startsWith("ERROR: "));
+    }
+
+    //Test case to verify setting a valid input source with exception handling
+    @Test
+    public void testSetInputSource() throws ValidationException {
+        try {
+            api.setInputSource(testFile.getAbsolutePath());
+        } catch (ValidationException e) {
+            fail("ValidationException was thrown: " + e.getMessage());
+        }
     }
 
 }
