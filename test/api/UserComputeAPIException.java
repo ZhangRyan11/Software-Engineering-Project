@@ -5,9 +5,7 @@ public class UserComputeAPIException implements UserComputeAPI{
     // Getting 3 blank variables to use later
     private String inputSource;
     private String outputDestination;
-    private String delimiters;
-
-    public void setInputSource(String source) {
+    public void setInputSource(String source) throws ValidationException {
         // Below 2 lines are exception to not allow a null or empty source
         if (source == null || source.trim().isEmpty()) {
             throw new ValidationException("Input source cannot be null or empty");
@@ -20,7 +18,7 @@ public class UserComputeAPIException implements UserComputeAPI{
         this.inputSource = source;
     }
     
-    public void setOutputDestination(String destination) {
+    public void setOutputDestination(String destination) throws ValidationException {
         // Throws same exception from earlier not allowing destination to be null or empty
         if (destination == null || destination.trim().isEmpty()) {
             throw new ValidationException("Output destination cannot be null or empty");
@@ -30,8 +28,6 @@ public class UserComputeAPIException implements UserComputeAPI{
     }
     
     public void setDelimiters(String delimiters) {
-        // All delimiter values are valid - null or empty means use defaults
-        this.delimiters = delimiters;
     }
     
     public String processRequest() {

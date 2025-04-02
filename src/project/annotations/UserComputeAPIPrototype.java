@@ -5,8 +5,6 @@ package project.annotations;
  */
 public class UserComputeAPIPrototype {
     private String inputSource;
-    private String outputDestination;
-    
     /**
      * Sets the input source for computation
      * @param source The path to the input file
@@ -27,7 +25,6 @@ public class UserComputeAPIPrototype {
      * @param destination The path where results should be saved
      */
     public void setOutputDestination(String destination) {
-        this.outputDestination = destination;
     }
     
     /**
