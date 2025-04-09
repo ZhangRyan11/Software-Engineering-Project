@@ -4,6 +4,9 @@
 # Ignore Gradle build output directory
 extracted-include-proto
 tmp
+extracted-include-proto
+test-results
+reports
 gradle.zip
 .project
 .classpath
