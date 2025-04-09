@@ -2,12 +2,8 @@
 .gradle
 
 # Ignore Gradle build output directory
-<<<<<<< HEAD
 extracted-include-proto
 tmp
-=======
-build
->>>>>>> parent of 9364e34 (ran ./gradlew genProto and removed build from gitignore)
 gradle.zip
 .project
 .classpath
