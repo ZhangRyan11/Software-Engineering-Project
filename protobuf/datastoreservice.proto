@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+option java_multiple_files = true;  // Generate separate .java files for each message type
+option java_package = "com.datastore.grpc";  // Java package for the generated code
+option java_outer_classname = "DataStoreServiceProto";  // Wrapper class name for non-multiple files mode
+
+/**
+ * DataStorage service definition.
+ * This service provides persistent storage for computation data and results.
+ */
+service DataStorage {
+  // Stores input data for a computation job
+  rpc StoreData (StoreRequest) returns (StoreResponse) {}
+  
+  // Retrieves previously stored input data
+  rpc RetrieveData (RetrieveRequest) returns (RetrieveResponse) {}
+  
+  // Stores computation results and optionally writes to a file
+  rpc StoreResults (ResultsRequest) returns (ResultsResponse) {}
+  
+  // Retrieves previously stored computation results
+  rpc RetrieveResults (RetrieveResultsRequest) returns (RetrieveResultsResponse) {}
+}
+
+// Request message for storing input data.
+
+message StoreRequest {
+  string job_id = 1;              // Unique ID for the job this data belongs to
+  repeated double data = 2;       // The input data to store
+}
+
+//Response message for data storage requests.
+
+message StoreResponse {
+  bool success = 1;               // Whether the data was stored successfully
+  string message = 2;             // Status or error message
+}
+
+// Request message for retrieving input data.
+
+message RetrieveRequest {
+  string job_id = 1;              // ID of the job to retrieve data for
+}
+
+// Response message for data retrieval requests.
+
+message RetrieveResponse {
+  bool success = 1;               // Whether the retrieval was successful
+  repeated double data = 2;       // The retrieved data if successful
+  string message = 3;             // Status or error message
+}
+
+/**
+ * Request message for storing computation results.
+ */
+message ResultsRequest {
+  string job_id = 1;              // ID of the job these results belong to
+  repeated double results = 2;    // The computation results to store
+  string output_file = 3;         // Optional path to write results to
+  string delimiter = 4;           // Delimiter to use in output file
+}
+
+// Response message for results storage requests.
+
+message ResultsResponse {
+  bool success = 1;               // Whether the results were stored successfully
+  string message = 2;             // Status or error message
+}
+
+// Request message for retrieving computation results.
+
+message RetrieveResultsRequest {
+  string job_id = 1;              // ID of the job to retrieve results for
+}
+
+// Response message for results retrieval requests.
+
+message RetrieveResultsResponse {
+  bool success = 1;               // Whether the retrieval was successful
+  repeated double results = 2;    // The retrieved results if successful
+  string message = 3;             // Status or error message
+}
