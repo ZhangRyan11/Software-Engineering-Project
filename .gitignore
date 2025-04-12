@@ -11,4 +11,3 @@ bin
 .settings
 *.class
 pre-commit
-/build/
