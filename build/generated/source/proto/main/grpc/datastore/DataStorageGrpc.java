@@ -143,7 +143,7 @@ public final class DataStorageGrpc {
   /**
    * Base class for the server implementation of the service DataStorage.
    */
-  public static abstract class DataStorageImplBase
+  public abstract static class DataStorageImplBase
       implements io.grpc.BindableService, AsyncService {
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -251,11 +251,11 @@ public final class DataStorageGrpc {
   private static final int METHODID_READ = 0;
   private static final int METHODID_WRITE = 1;
 
-  private static final class MethodHandlers<Req, Resp> implements
-      io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
-      io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
-      io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
-      io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
+  private static final class MethodHandlers<RequestT, ResponseT> implements
+      io.grpc.stub.ServerCalls.UnaryMethod<RequestT, ResponseT>,
+      io.grpc.stub.ServerCalls.ServerStreamingMethod<RequestT, ResponseT>,
+      io.grpc.stub.ServerCalls.ClientStreamingMethod<RequestT, ResponseT>,
+      io.grpc.stub.ServerCalls.BidiStreamingMethod<RequestT, ResponseT> {
     private final AsyncService serviceImpl;
     private final int methodId;
 
@@ -266,7 +266,7 @@ public final class DataStorageGrpc {
 
     @java.lang.Override
     @java.lang.SuppressWarnings("unchecked")
-    public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
+    public void invoke(RequestT request, io.grpc.stub.StreamObserver<ResponseT> responseObserver) {
       switch (methodId) {
         case METHODID_READ:
           serviceImpl.read((datastore.DatastoreService.ReadRequest) request,
@@ -283,8 +283,8 @@ public final class DataStorageGrpc {
 
     @java.lang.Override
     @java.lang.SuppressWarnings("unchecked")
-    public io.grpc.stub.StreamObserver<Req> invoke(
-        io.grpc.stub.StreamObserver<Resp> responseObserver) {
+    public io.grpc.stub.StreamObserver<RequestT> invoke(
+        io.grpc.stub.StreamObserver<ResponseT> responseObserver) {
       switch (methodId) {
         default:
           throw new AssertionError();
@@ -311,7 +311,7 @@ public final class DataStorageGrpc {
         .build();
   }
 
-  private static abstract class DataStorageBaseDescriptorSupplier
+  private abstract static class DataStorageBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
     DataStorageBaseDescriptorSupplier() {}
 
