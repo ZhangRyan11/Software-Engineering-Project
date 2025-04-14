@@ -12,3 +12,4 @@ bin
 *.class
 pre-commit
 
+/build/
