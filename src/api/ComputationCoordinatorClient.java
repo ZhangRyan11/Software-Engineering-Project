@@ -25,7 +25,7 @@ public class ComputationCoordinatorClient {
     // Constructs a client with specified server coordinates.
     // @param host The hostname or IP address of the computation server
     // @param port The port number the server is listening on
-    public ComputationClient(String host, int port) {
+    public void ComputationClient(String host, int port) {
         // Initialize gRPC channel with plain text (no encryption)
         this.channel = ManagedChannelBuilder.forAddress(host, port)
                 .usePlaintext()
