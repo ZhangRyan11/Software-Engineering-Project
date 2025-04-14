@@ -6,7 +6,7 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.59.1)",
-    comments = "Source: datastore_service.proto")
+    comments = "Source: datastoreservice.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class DataStorageGrpc {
 
@@ -15,29 +15,29 @@ public final class DataStorageGrpc {
   public static final java.lang.String SERVICE_NAME = "datastore.DataStorage";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<datastore.DatastoreService.ReadRequest,
-      datastore.DatastoreService.ReadResponse> getReadMethod;
+  private static volatile io.grpc.MethodDescriptor<datastore.Datastoreservice.ReadRequest,
+      datastore.Datastoreservice.ReadResponse> getReadMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "read",
-      requestType = datastore.DatastoreService.ReadRequest.class,
-      responseType = datastore.DatastoreService.ReadResponse.class,
+      requestType = datastore.Datastoreservice.ReadRequest.class,
+      responseType = datastore.Datastoreservice.ReadResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<datastore.DatastoreService.ReadRequest,
-      datastore.DatastoreService.ReadResponse> getReadMethod() {
-    io.grpc.MethodDescriptor<datastore.DatastoreService.ReadRequest, datastore.DatastoreService.ReadResponse> getReadMethod;
+  public static io.grpc.MethodDescriptor<datastore.Datastoreservice.ReadRequest,
+      datastore.Datastoreservice.ReadResponse> getReadMethod() {
+    io.grpc.MethodDescriptor<datastore.Datastoreservice.ReadRequest, datastore.Datastoreservice.ReadResponse> getReadMethod;
     if ((getReadMethod = DataStorageGrpc.getReadMethod) == null) {
       synchronized (DataStorageGrpc.class) {
         if ((getReadMethod = DataStorageGrpc.getReadMethod) == null) {
           DataStorageGrpc.getReadMethod = getReadMethod =
-              io.grpc.MethodDescriptor.<datastore.DatastoreService.ReadRequest, datastore.DatastoreService.ReadResponse>newBuilder()
+              io.grpc.MethodDescriptor.<datastore.Datastoreservice.ReadRequest, datastore.Datastoreservice.ReadResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "read"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  datastore.DatastoreService.ReadRequest.getDefaultInstance()))
+                  datastore.Datastoreservice.ReadRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  datastore.DatastoreService.ReadResponse.getDefaultInstance()))
+                  datastore.Datastoreservice.ReadResponse.getDefaultInstance()))
               .setSchemaDescriptor(new DataStorageMethodDescriptorSupplier("read"))
               .build();
         }
@@ -46,29 +46,29 @@ public final class DataStorageGrpc {
     return getReadMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<datastore.DatastoreService.WriteRequest,
-      datastore.DatastoreService.WriteResponse> getWriteMethod;
+  private static volatile io.grpc.MethodDescriptor<datastore.Datastoreservice.WriteRequest,
+      datastore.Datastoreservice.WriteResponse> getWriteMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "write",
-      requestType = datastore.DatastoreService.WriteRequest.class,
-      responseType = datastore.DatastoreService.WriteResponse.class,
+      requestType = datastore.Datastoreservice.WriteRequest.class,
+      responseType = datastore.Datastoreservice.WriteResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<datastore.DatastoreService.WriteRequest,
-      datastore.DatastoreService.WriteResponse> getWriteMethod() {
-    io.grpc.MethodDescriptor<datastore.DatastoreService.WriteRequest, datastore.DatastoreService.WriteResponse> getWriteMethod;
+  public static io.grpc.MethodDescriptor<datastore.Datastoreservice.WriteRequest,
+      datastore.Datastoreservice.WriteResponse> getWriteMethod() {
+    io.grpc.MethodDescriptor<datastore.Datastoreservice.WriteRequest, datastore.Datastoreservice.WriteResponse> getWriteMethod;
     if ((getWriteMethod = DataStorageGrpc.getWriteMethod) == null) {
       synchronized (DataStorageGrpc.class) {
         if ((getWriteMethod = DataStorageGrpc.getWriteMethod) == null) {
           DataStorageGrpc.getWriteMethod = getWriteMethod =
-              io.grpc.MethodDescriptor.<datastore.DatastoreService.WriteRequest, datastore.DatastoreService.WriteResponse>newBuilder()
+              io.grpc.MethodDescriptor.<datastore.Datastoreservice.WriteRequest, datastore.Datastoreservice.WriteResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "write"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  datastore.DatastoreService.WriteRequest.getDefaultInstance()))
+                  datastore.Datastoreservice.WriteRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  datastore.DatastoreService.WriteResponse.getDefaultInstance()))
+                  datastore.Datastoreservice.WriteResponse.getDefaultInstance()))
               .setSchemaDescriptor(new DataStorageMethodDescriptorSupplier("write"))
               .build();
         }
@@ -127,15 +127,15 @@ public final class DataStorageGrpc {
 
     /**
      */
-    default void read(datastore.DatastoreService.ReadRequest request,
-        io.grpc.stub.StreamObserver<datastore.DatastoreService.ReadResponse> responseObserver) {
+    default void read(datastore.Datastoreservice.ReadRequest request,
+        io.grpc.stub.StreamObserver<datastore.Datastoreservice.ReadResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReadMethod(), responseObserver);
     }
 
     /**
      */
-    default void write(datastore.DatastoreService.WriteRequest request,
-        io.grpc.stub.StreamObserver<datastore.DatastoreService.WriteResponse> responseObserver) {
+    default void write(datastore.Datastoreservice.WriteRequest request,
+        io.grpc.stub.StreamObserver<datastore.Datastoreservice.WriteResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getWriteMethod(), responseObserver);
     }
   }
@@ -143,7 +143,7 @@ public final class DataStorageGrpc {
   /**
    * Base class for the server implementation of the service DataStorage.
    */
-  public abstract static class DataStorageImplBase
+  public static abstract class DataStorageImplBase
       implements io.grpc.BindableService, AsyncService {
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -169,16 +169,16 @@ public final class DataStorageGrpc {
 
     /**
      */
-    public void read(datastore.DatastoreService.ReadRequest request,
-        io.grpc.stub.StreamObserver<datastore.DatastoreService.ReadResponse> responseObserver) {
+    public void read(datastore.Datastoreservice.ReadRequest request,
+        io.grpc.stub.StreamObserver<datastore.Datastoreservice.ReadResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getReadMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void write(datastore.DatastoreService.WriteRequest request,
-        io.grpc.stub.StreamObserver<datastore.DatastoreService.WriteResponse> responseObserver) {
+    public void write(datastore.Datastoreservice.WriteRequest request,
+        io.grpc.stub.StreamObserver<datastore.Datastoreservice.WriteResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getWriteMethod(), getCallOptions()), request, responseObserver);
     }
@@ -202,14 +202,14 @@ public final class DataStorageGrpc {
 
     /**
      */
-    public datastore.DatastoreService.ReadResponse read(datastore.DatastoreService.ReadRequest request) {
+    public datastore.Datastoreservice.ReadResponse read(datastore.Datastoreservice.ReadRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getReadMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public datastore.DatastoreService.WriteResponse write(datastore.DatastoreService.WriteRequest request) {
+    public datastore.Datastoreservice.WriteResponse write(datastore.Datastoreservice.WriteRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getWriteMethod(), getCallOptions(), request);
     }
@@ -233,16 +233,16 @@ public final class DataStorageGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<datastore.DatastoreService.ReadResponse> read(
-        datastore.DatastoreService.ReadRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<datastore.Datastoreservice.ReadResponse> read(
+        datastore.Datastoreservice.ReadRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getReadMethod(), getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<datastore.DatastoreService.WriteResponse> write(
-        datastore.DatastoreService.WriteRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<datastore.Datastoreservice.WriteResponse> write(
+        datastore.Datastoreservice.WriteRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getWriteMethod(), getCallOptions()), request);
     }
@@ -251,11 +251,11 @@ public final class DataStorageGrpc {
   private static final int METHODID_READ = 0;
   private static final int METHODID_WRITE = 1;
 
-  private static final class MethodHandlers<RequestT, ResponseT> implements
-      io.grpc.stub.ServerCalls.UnaryMethod<RequestT, ResponseT>,
-      io.grpc.stub.ServerCalls.ServerStreamingMethod<RequestT, ResponseT>,
-      io.grpc.stub.ServerCalls.ClientStreamingMethod<RequestT, ResponseT>,
-      io.grpc.stub.ServerCalls.BidiStreamingMethod<RequestT, ResponseT> {
+  private static final class MethodHandlers<Req, Resp> implements
+      io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
+      io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
+      io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
+      io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
     private final AsyncService serviceImpl;
     private final int methodId;
 
@@ -266,15 +266,15 @@ public final class DataStorageGrpc {
 
     @java.lang.Override
     @java.lang.SuppressWarnings("unchecked")
-    public void invoke(RequestT request, io.grpc.stub.StreamObserver<ResponseT> responseObserver) {
+    public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_READ:
-          serviceImpl.read((datastore.DatastoreService.ReadRequest) request,
-              (io.grpc.stub.StreamObserver<datastore.DatastoreService.ReadResponse>) responseObserver);
+          serviceImpl.read((datastore.Datastoreservice.ReadRequest) request,
+              (io.grpc.stub.StreamObserver<datastore.Datastoreservice.ReadResponse>) responseObserver);
           break;
         case METHODID_WRITE:
-          serviceImpl.write((datastore.DatastoreService.WriteRequest) request,
-              (io.grpc.stub.StreamObserver<datastore.DatastoreService.WriteResponse>) responseObserver);
+          serviceImpl.write((datastore.Datastoreservice.WriteRequest) request,
+              (io.grpc.stub.StreamObserver<datastore.Datastoreservice.WriteResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -283,8 +283,8 @@ public final class DataStorageGrpc {
 
     @java.lang.Override
     @java.lang.SuppressWarnings("unchecked")
-    public io.grpc.stub.StreamObserver<RequestT> invoke(
-        io.grpc.stub.StreamObserver<ResponseT> responseObserver) {
+    public io.grpc.stub.StreamObserver<Req> invoke(
+        io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         default:
           throw new AssertionError();
@@ -298,26 +298,26 @@ public final class DataStorageGrpc {
           getReadMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              datastore.DatastoreService.ReadRequest,
-              datastore.DatastoreService.ReadResponse>(
+              datastore.Datastoreservice.ReadRequest,
+              datastore.Datastoreservice.ReadResponse>(
                 service, METHODID_READ)))
         .addMethod(
           getWriteMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              datastore.DatastoreService.WriteRequest,
-              datastore.DatastoreService.WriteResponse>(
+              datastore.Datastoreservice.WriteRequest,
+              datastore.Datastoreservice.WriteResponse>(
                 service, METHODID_WRITE)))
         .build();
   }
 
-  private abstract static class DataStorageBaseDescriptorSupplier
+  private static abstract class DataStorageBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
     DataStorageBaseDescriptorSupplier() {}
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return datastore.DatastoreService.getDescriptor();
+      return datastore.Datastoreservice.getDescriptor();
     }
 
     @java.lang.Override
