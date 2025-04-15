@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import coordinatorservice.ComputationCoordinatorGrpc;
+
 // Client application that connects to the ComputationCoordinator service.
 // Provides methods to submit computation tasks and retrieve results.
 // Includes a command-line interface for user interaction.

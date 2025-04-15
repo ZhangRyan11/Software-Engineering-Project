@@ -1,7 +1,5 @@
 package coordinatorservice;
 
-option java_multiple_files = true;  // Generate separate .java files for each message type
-option java_package = "com.computation.grpc";  // Java package for the generated code
 option java_outer_classname = "CoordinatorServiceProto";  // Wrapper class name for non-multiple files mode
 
 /**
@@ -31,7 +29,7 @@ message NumberListRequest {
 //Request message for submitting a file of numbers.
 
 message FileRequest {
-  string file_path = 1;           // Path to the input file containing numbers
+  optional string file_path = 1;           // Path to the input file containing numbers
   optional string output_file = 2;         // Optional path to write results to
   optional string delimiter = 3;           // Delimiter to use in output file (default: comma)
 }
