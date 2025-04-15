@@ -1,17 +1,18 @@
-package grpc.example;
+package api;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import coordinatorservice.ComputationCoordinatorGrpc;
+import coordinatorservice.ComputationCoordinatorGrpc.ComputationCoordinatorBlockingStub;
+import coordinatorservice.CoordinatorServiceProto.ComputationResponse;
+import coordinatorservice.CoordinatorServiceProto.NumberListRequest;
 import io.grpc.Channel;
 import io.grpc.Grpc;
 import io.grpc.InsecureChannelCredentials;
 import io.grpc.ManagedChannel;
 import io.grpc.StatusRuntimeException;
-import coordinatorservice.CoordinatorServiceProto.*;
-import coordinatorservice.ComputationCoordinatorGrpc;
-import coordinatorservice.ComputationCoordinatorGrpc.ComputationCoordinatorBlockingStub;
 
 public class ComputeCoordinatorClient {
     private final ComputationCoordinatorBlockingStub blockingStub;
