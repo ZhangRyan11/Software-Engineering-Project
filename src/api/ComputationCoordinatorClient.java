@@ -27,10 +27,8 @@ public class ComputationCoordinatorClient {
     private ManagedChannel channel;
     private ComputationCoordinatorStub asyncStub = null;
 
-    // Constructs a client with specified server coordinates.
-    // @param host The hostname or IP address of the computation server
-    // @param port The port number the server is listening on
-    public void ComputationClient(String host, int port) {
+    // Initialize the client with specified server coordinates
+    public void init(String host, int port) {
         // Initialize gRPC channel with plain text (no encryption)
         channel = ManagedChannelBuilder.forAddress(host, port)
                 .usePlaintext()
@@ -226,12 +224,12 @@ public class ComputationCoordinatorClient {
 
     // Main method to run the client as a standalone application.
     // Provides an interactive command-line interface.
-    public static <ComputationClient> void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         String host = "localhost";
         int port = 50051;
 
         ComputationCoordinatorClient client = new ComputationCoordinatorClient();
-        client.ComputationClient(host, port);
+        client.init(host, port);
 
         try {
             Scanner scanner = new Scanner(System.in);
