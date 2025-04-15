@@ -1,4 +1,4 @@
-package grpc.example;
+package api;
 
 
 import java.io.IOException;
