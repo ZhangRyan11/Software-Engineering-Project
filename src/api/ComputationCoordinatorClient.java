@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import coordinatorservice.ComputationCoordinatorGrpc;
 import coordinatorservice.ComputationCoordinatorGrpc.ComputationCoordinatorStub;
 import coordinatorservice.CoordinatorServiceProto.ComputationResponse;
