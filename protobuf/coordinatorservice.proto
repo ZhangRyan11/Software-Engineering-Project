@@ -1,0 +1,60 @@
+package coordinatorservice;
+
+option java_multiple_files = true;  // Generate separate .java files for each message type
+option java_package = "com.computation.grpc";  // Java package for the generated code
+option java_outer_classname = "CoordinatorServiceProto";  // Wrapper class name for non-multiple files mode
+
+/**
+ * ComputationCoordinator service definition.
+ * This service coordinates computation requests from clients,
+ * manages computation tasks, and returns results.
+ */
+service ComputationCoordinator {
+  // Submits a list of numbers directly for computation
+  rpc SubmitNumberList (NumberListRequest) returns (ComputationResponse) {}
+  
+  // Submits a file path containing numbers for computation
+  rpc SubmitFile (FileRequest) returns (ComputationResponse) {}
+  
+  // Gets the status of a previously submitted computation job
+  rpc GetStatus (StatusRequest) returns (StatusResponse) {}
+}
+
+// Request message for submitting a list of numbers.
+
+message NumberListRequest {
+  repeated double numbers = 1;    // The list of numbers to compute
+  string output_file = 2;         // Optional path to write results to
+  string delimiter = 3;           // Delimiter to use in output file (default: comma)
+}
+
+//Request message for submitting a file of numbers.
+
+message FileRequest {
+  string file_path = 1;           // Path to the input file containing numbers
+  string output_file = 2;         // Optional path to write results to
+  string delimiter = 3;           // Delimiter to use in output file (default: comma)
+}
+
+// Response message for computation submission requests.
+
+message ComputationResponse {
+  string job_id = 1;              // Unique ID for the submitted job
+  bool success = 2;               // Whether the submission was successful
+  string message = 3;             // Status or error message
+}
+
+// Request message for checking job status.
+
+message StatusRequest {
+  string job_id = 1;              // ID of the job to check
+}
+
+//Response message for status requests.
+
+message StatusResponse {
+  bool completed = 1;             // Whether the job has completed
+  bool success = 2;               // Whether the job completed successfully
+  string message = 3;             // Status or error message
+  repeated double results = 4;    // Computation results if available
+}
