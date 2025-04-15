@@ -24,37 +24,37 @@ service ComputationCoordinator {
 
 message NumberListRequest {
   repeated double numbers = 1;    // The list of numbers to compute
-  string output_file = 2;         // Optional path to write results to
-  string delimiter = 3;           // Delimiter to use in output file (default: comma)
+  optional string output_file = 2;         // Optional path to write results to
+  optional string delimiter = 3;           // Delimiter to use in output file (default: comma)
 }
 
 //Request message for submitting a file of numbers.
 
 message FileRequest {
   string file_path = 1;           // Path to the input file containing numbers
-  string output_file = 2;         // Optional path to write results to
-  string delimiter = 3;           // Delimiter to use in output file (default: comma)
+  optional string output_file = 2;         // Optional path to write results to
+  optional string delimiter = 3;           // Delimiter to use in output file (default: comma)
 }
 
 // Response message for computation submission requests.
 
 message ComputationResponse {
-  string job_id = 1;              // Unique ID for the submitted job
-  bool success = 2;               // Whether the submission was successful
-  string message = 3;             // Status or error message
+ optional string job_id = 1;              // Unique ID for the submitted job
+ optional bool success = 2;               // Whether the submission was successful
+ optional string message = 3;             // Status or error message
 }
 
 // Request message for checking job status.
 
 message StatusRequest {
-  string job_id = 1;              // ID of the job to check
+ optional string job_id = 1;              // ID of the job to check
 }
 
 //Response message for status requests.
 
 message StatusResponse {
-  bool completed = 1;             // Whether the job has completed
-  bool success = 2;               // Whether the job completed successfully
-  string message = 3;             // Status or error message
+ optional bool completed = 1;             // Whether the job has completed
+ optional bool success = 2;               // Whether the job completed successfully
+ optional string message = 3;             // Status or error message
   repeated double results = 4;    // Computation results if available
 }

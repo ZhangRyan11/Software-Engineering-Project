@@ -3,7 +3,6 @@
 
 # Ignore Gradle build output directory but keep generated files
 build/*
-!build/generated/
 gradle.zip
 .project
 .classpath
@@ -11,4 +10,3 @@ bin
 .settings
 *.class
 pre-commit
-/build/
