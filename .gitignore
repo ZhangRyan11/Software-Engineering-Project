@@ -2,7 +2,6 @@
 .gradle
 
 # Ignore Gradle build output directory but keep generated files
-build/*
 gradle.zip
 .project
 .classpath
