@@ -6,17 +6,16 @@ import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.Server;
 import io.grpc.protobuf.services.ProtoReflectionService;
+import datastore.DataStorageGrpc;
 
-public class DataStorageServer { // Boilerplate: Changed name of class
+public class DataStorageServer {
     private Server server;
 
     private void start() throws IOException {
-        /* The port on which the server should run */
-    	//Port is one off from Coordinator port 
-        int port = 50056; // Boilerplate: Set port number (only one server per port)
+        int port = 50056;
         DataStoreImpl ds = new DataStoreImpl();
         server = Grpc.newServerBuilderForPort(port, InsecureServerCredentials.create())
-                .addService(new DataStorageImpl(ds)) // Boilerplate: Changed name of class
+                .addService(new DataStorageImpl(ds))
                 .addService(ProtoReflectionService.newInstance())
                 .build()
                 .start();
@@ -38,9 +37,8 @@ public class DataStorageServer { // Boilerplate: Changed name of class
         });
     }
 
-    /**
-     * Await termination on the main thread since the grpc library uses daemon threads.
-     */
+    // Await termination on the main thread since the grpc library uses daemon threads.
+     
     private void blockUntilShutdown() throws InterruptedException {
         if (server != null) {
             server.awaitTermination();
