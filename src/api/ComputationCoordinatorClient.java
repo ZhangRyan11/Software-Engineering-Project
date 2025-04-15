@@ -1,9 +1,5 @@
 package api;
 
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
-import io.grpc.StatusRuntimeException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,27 +8,34 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import coordinatorservice.ComputationCoordinatorGrpc;
+import coordinatorservice.ComputationCoordinatorGrpc.ComputationCoordinatorStub;
+import coordinatorservice.CoordinatorServiceProto.ComputationResponse;
+import coordinatorservice.CoordinatorServiceProto.FileRequest;
+import coordinatorservice.CoordinatorServiceProto.NumberListRequest;
+import coordinatorservice.CoordinatorServiceProto.StatusRequest;
+import coordinatorservice.CoordinatorServiceProto.StatusResponse;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import io.grpc.StatusRuntimeException;
 
 // Client application that connects to the ComputationCoordinator service.
 // Provides methods to submit computation tasks and retrieve results.
 // Includes a command-line interface for user interaction.
 public class ComputationCoordinatorClient {
-    private static final Logger logger = Logger.getLogger(ComputationClient.class.getName());
+    private static final Logger logger = Logger.getLogger(ComputeCoordinatorClient.class.getName());
 
-    // The gRPC channel used for communication with the server
-    private final ManagedChannel channel;
-    // The async stub used to make non-blocking calls
-    private final ComputationCoordinatorGrpc.ComputationCoordinatorStub asyncStub;
+    private ManagedChannel channel;
+    private ComputationCoordinatorStub asyncStub = null;
 
     // Constructs a client with specified server coordinates.
     // @param host The hostname or IP address of the computation server
     // @param port The port number the server is listening on
     public void ComputationClient(String host, int port) {
         // Initialize gRPC channel with plain text (no encryption)
-        this.channel = ManagedChannelBuilder.forAddress(host, port)
+        channel = ManagedChannelBuilder.forAddress(host, port)
                 .usePlaintext()
                 .build();
-        this.asyncStub = new ComputationCoordinatorGrpc.ComputationCoordinatorStub(channel);
+        this.asyncStub = new ComputationCoordinatorGrpc.ComputationCoordinatorStub(channel, null);
     }
 
     // Shuts down the gRPC channel, terminating all ongoing RPC calls.
@@ -170,10 +173,18 @@ public class ComputationCoordinatorClient {
                                     List<Double> results = response.getResultsList();
                                     if (!results.isEmpty()) {
                                         System.out.println("\nResults:");
-                                        if (results.size() >= 1) System.out.println("Sum: " + results.get(0));
-                                        if (results.size() >= 2) System.out.println("Average: " + results.get(1));
-                                        if (results.size() >= 3) System.out.println("Min: " + results.get(2));
-                                        if (results.size() >= 4) System.out.println("Max: " + results.get(3));
+                                        if (results.size() >= 1) {
+											System.out.println("Sum: " + results.get(0));
+										}
+                                        if (results.size() >= 2) {
+											System.out.println("Average: " + results.get(1));
+										}
+                                        if (results.size() >= 3) {
+											System.out.println("Min: " + results.get(2));
+										}
+                                        if (results.size() >= 4) {
+											System.out.println("Max: " + results.get(3));
+										}
                                     }
                                 } else {
                                     logger.warning("Computation failed: " + response.getMessage());
@@ -215,11 +226,12 @@ public class ComputationCoordinatorClient {
 
     // Main method to run the client as a standalone application.
     // Provides an interactive command-line interface.
-    public static void main(String[] args) throws Exception {
+    public static <ComputationClient> void main(String[] args) throws Exception {
         String host = "localhost";
         int port = 50051;
 
-        ComputationClient client = new ComputationClient(host, port);
+        ComputationCoordinatorClient client = new ComputationCoordinatorClient();
+        client.ComputationClient(host, port);
 
         try {
             Scanner scanner = new Scanner(System.in);
