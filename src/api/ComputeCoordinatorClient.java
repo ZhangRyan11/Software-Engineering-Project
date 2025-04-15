@@ -1,50 +1,54 @@
 package grpc.example;
 
-
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import io.grpc.Channel;
 import io.grpc.Grpc;
 import io.grpc.InsecureChannelCredentials;
 import io.grpc.ManagedChannel;
 import io.grpc.StatusRuntimeException;
-import phoneorder.PhoneOrder.PhoneOrderRequest;
-import phoneorder.PhoneOrder.PhoneOrderResponse;
-import phoneorder.PhoneOrderServiceGrpc;
-import phoneorder.PhoneOrderServiceGrpc.PhoneOrderServiceBlockingStub;
+import coordinatorservice.CoordinatorServiceProto.*;
+import coordinatorservice.ComputationCoordinatorGrpc;
+import coordinatorservice.ComputationCoordinatorGrpc.ComputationCoordinatorBlockingStub;
 
-public class ComputeCoordinatorClient { // Boilerplate TODO: change to <servicename>Client
-    private final PhoneOrderServiceBlockingStub blockingStub; // Boilerplate TODO: update to appropriate blocking stub
+public class ComputeCoordinatorClient {
+    private final ComputationCoordinatorBlockingStub blockingStub;
 
-    public PhoneOrderClient(Channel channel) {
-        blockingStub = PhoneOrderServiceGrpc.newBlockingStub(channel);  // Boilerplate TODO: update to appropriate blocking stub
+    public ComputeCoordinatorClient(Channel channel) {
+        blockingStub = ComputationCoordinatorGrpc.newBlockingStub(channel);
     }
 
-    // Boilerplate TODO: replace this method with actual client call/response logic
-    public void order() {        
-        PhoneOrderRequest request = PhoneOrderRequest.newBuilder().setModel("android").setIncludeWarranty(true).build();
-        PhoneOrderResponse response;
+    public void submitNumberList(double[] numbers, String outputFile, String delimiter) {
+        NumberListRequest request = NumberListRequest.newBuilder()
+            .addAllNumbers(Arrays.stream(numbers).boxed().collect(Collectors.toList()))
+            .setOutputFile(outputFile)
+            .setDelimiter(delimiter)
+            .build();
+            
+        ComputationResponse response;
         try {
-            response = blockingStub.createPhoneOrder(request);
+            response = blockingStub.submitNumberList(request);
+            if (response.getSuccess()) {
+                System.out.println("Job submitted successfully. Job ID: " + response.getJobId());
+            } else {
+                System.err.println("Error: " + response.getMessage());
+            }
         } catch (StatusRuntimeException e) {
             e.printStackTrace();
-            return;
-        }
-        if (response.hasErrorMessage()) {
-            System.err.println("Error: " + response.getErrorMessage());
-        } else {
-            System.out.println("Order number: " + response.getOrderNumber());
         }
     }
 
     public static void main(String[] args) throws Exception {
-        String target = "localhost:50051";  // Boilerplate TODO: make sure the server/port match the server/port you want to connect to
+        String target = "localhost:50052";
 
         ManagedChannel channel = Grpc.newChannelBuilder(target, InsecureChannelCredentials.create())
                 .build();
         try {
-            PhoneOrderClient client = new PhoneOrderClient(channel); // Boilerplate TODO: update to this class name
-            client.order();
+            ComputeCoordinatorClient client = new ComputeCoordinatorClient(channel);
+            // Example usage
+            client.submitNumberList(new double[]{1.0, 2.0, 3.0}, "output.txt", ",");
         } finally {
             channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
         }

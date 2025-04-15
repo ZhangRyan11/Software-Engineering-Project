@@ -9,15 +9,14 @@ import io.grpc.InsecureServerCredentials;
 import io.grpc.Server;
 import io.grpc.protobuf.services.ProtoReflectionService;
 
-public class ComputationCoordinatorServer { // Boilerplate TODO: Change name of class
-      private Server server;
+public class ComputationCoordinatorServer {
+    private Server server;
 
-      private void start() throws IOException {
-        /* The port on which the server should run */
-        int port = 50051; // Boilerplate TODO: Consider changing the port (only one server per port)
+    private void start() throws IOException {
+        int port = 50052;
         
         server = Grpc.newServerBuilderForPort(port, InsecureServerCredentials.create())
-            .addService(new PhoneOrderServiceImpl()) // Boilerplate TODO: Change name of class
+            .addService(new ComputationCoordinatorServiceImpl())
             .addService(ProtoReflectionService.newInstance())
             .build()
             .start();
@@ -49,7 +48,7 @@ public class ComputationCoordinatorServer { // Boilerplate TODO: Change name of 
       }
 
       public static void main(String[] args) throws Exception {
-          PhoneOrderServer server = new PhoneOrderServer(); // Boilerplate TODO: Change name of class
+          ComputationCoordinatorServer server = new ComputationCoordinatorServer();
           server.start();
           server.blockUntilShutdown();
       }
