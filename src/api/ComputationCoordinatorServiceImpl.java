@@ -3,7 +3,7 @@ package api;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import coordinatorservice.ComputationCoordinatorGrpc.ComputationCoordinatorImpl;
+import coordinatorservice.ComputationCoordinatorGrpc.ComputationCoordinatorImplBase;
 import coordinatorservice.CoordinatorServiceProto.ComputationResponse;
 import coordinatorservice.CoordinatorServiceProto.FileRequest;
 import coordinatorservice.CoordinatorServiceProto.NumberListRequest;
@@ -11,7 +11,7 @@ import coordinatorservice.CoordinatorServiceProto.StatusRequest;
 import coordinatorservice.CoordinatorServiceProto.StatusResponse;
 import io.grpc.stub.StreamObserver;
 
-public class ComputationCoordinatorServiceImpl extends ComputationCoordinatorImpl {
+public class ComputationCoordinatorServiceImpl extends ComputationCoordinatorImplBase {
     private final ConcurrentHashMap<String, StatusResponse> jobStatus = new ConcurrentHashMap<>();
 
     @Override
