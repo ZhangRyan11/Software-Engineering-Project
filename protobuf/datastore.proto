@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option java_multiple_files = false;
+option java_package = "datastore";
+option java_outer_classname = "Datastoreservice";
+
+package datastore;
+
+// Service for data storage operations
+service DataStorage {
+  // Read data from storage
+  rpc Read (ReadRequest) returns (ReadResponse) {}
+  
+  // Write data to storage
+  rpc Write (WriteRequest) returns (WriteResponse) {}
+}
+
+// Request to read data
+message ReadRequest {
+  string key = 1;
+  string file_path = 2;
+}
+
+// Response with data from storage
+message ReadResponse {
+  enum ReadStatus {
+    SUCCESS = 0;
+    NOT_FOUND = 1;
+    FAILURE = 2;
+  }
+  
+  ReadStatus status = 1;
+  bytes data = 2;
+  string message = 3;
+}
+
+// Request to write data
+message WriteRequest {
+  string key = 1;
+  string file_path = 2;
+  bytes data = 3;
+}
+
+// Response from write operation
+message WriteResponse {
+  enum WriteResponseStatus {
+    SUCCESS = 0;
+    FAILURE = 1;
+  }
+  
+  WriteResponseStatus status = 1;
+  string message = 2;
+}

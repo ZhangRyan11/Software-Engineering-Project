@@ -1,58 +1,59 @@
+syntax = "proto3";
+
+option java_multiple_files = false;
+option java_package = "coordinatorservice";
+option java_outer_classname = "CoordinatorServiceProto";
+
 package coordinatorservice;
 
-option java_outer_classname = "CoordinatorServiceProto";  // Wrapper class name for non-multiple files mode
-
-/**
- * ComputationCoordinator service definition.
- * This service coordinates computation requests from clients,
- * manages computation tasks, and returns results.
- */
+// Service for handling computation requests
 service ComputationCoordinator {
-  // Submits a list of numbers directly for computation
+  // Submits a list of numbers for computation
   rpc SubmitNumberList (NumberListRequest) returns (ComputationResponse) {}
   
-  // Submits a file path containing numbers for computation
+  // Submits a file for computation
   rpc SubmitFile (FileRequest) returns (ComputationResponse) {}
   
-  // Gets the status of a previously submitted computation job
+  // Gets the status of a computation job
   rpc GetStatus (StatusRequest) returns (StatusResponse) {}
 }
 
-// Request message for submitting a list of numbers.
-
+// Request containing a list of numbers for computation
 message NumberListRequest {
-  repeated double numbers = 1;    // The list of numbers to compute
-  optional string output_file = 2;         // Optional path to write results to
-  optional string delimiter = 3;           // Delimiter to use in output file (default: comma)
+  string job_id = 1;
+  repeated int32 numbers = 2;
 }
 
-//Request message for submitting a file of numbers.
-
+// Request containing a file for computation
 message FileRequest {
-  optional string file_path = 1;           // Path to the input file containing numbers
-  optional string output_file = 2;         // Optional path to write results to
-  optional string delimiter = 3;           // Delimiter to use in output file (default: comma)
+  string job_id = 1;
+  string file_path = 2;
+  bytes file_content = 3;
 }
 
-// Response message for computation submission requests.
-
-message ComputationResponse {
- optional string job_id = 1;              // Unique ID for the submitted job
- optional bool success = 2;               // Whether the submission was successful
- optional string message = 3;             // Status or error message
-}
-
-// Request message for checking job status.
-
+// Request to get status of a computation job
 message StatusRequest {
- optional string job_id = 1;              // ID of the job to check
+  string job_id = 1;
 }
 
-//Response message for status requests.
-
+// Response with status information
 message StatusResponse {
- optional bool completed = 1;             // Whether the job has completed
- optional bool success = 2;               // Whether the job completed successfully
- optional string message = 3;             // Status or error message
-  repeated double results = 4;    // Computation results if available
+  enum Status {
+    PENDING = 0;
+    PROCESSING = 1;
+    COMPLETED = 2;
+    FAILED = 3;
+  }
+  
+  string job_id = 1;
+  Status status = 2;
+  string message = 3;
+  float progress = 4;
+}
+
+// Response for a computation request
+message ComputationResponse {
+  string job_id = 1;
+  bool accepted = 2;
+  string message = 3;
 }
