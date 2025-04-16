@@ -25,9 +25,9 @@ public class ComputationCoordinatorServiceImpl extends ComputationCoordinatorImp
             
         // Store initial status
         jobStatus.put(jobId, StatusResponse.newBuilder()
-            .setCompleted(false)
-            .setSuccess(false)
+            .setStatus(StatusResponse.JobStatus.PENDING)
             .setMessage("Processing")
+            .setProgress(0.0)
             .build());
             
         responseObserver.onNext(response);
