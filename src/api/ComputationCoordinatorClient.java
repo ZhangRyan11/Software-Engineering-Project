@@ -243,6 +243,7 @@ public class ComputationCoordinatorClient {
 
                 int choice = scanner.nextInt();
                 scanner.nextLine(); // Consume newline
+                scanner.close();
 
                 switch (choice) {
                     case 1:
