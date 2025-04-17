@@ -2,11 +2,11 @@ package api;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
 import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.Server;
 import io.grpc.protobuf.services.ProtoReflectionService;
-import com.example.datastore.DataStorageGrpc;
 
 public class DataStorageServer {
     private Server server;

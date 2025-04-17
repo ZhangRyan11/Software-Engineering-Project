@@ -6,6 +6,11 @@ package project.annotations;
 public class ValidationException extends Exception {
     
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3190926056545748260L;
+
+	/**
      * Constructs a new ValidationException with the specified detail message
      * 
      * @param message the detail message

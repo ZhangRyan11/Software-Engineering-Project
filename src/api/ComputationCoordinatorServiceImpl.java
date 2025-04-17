@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import coordinatorservice.ComputationCoordinatorGrpc.ComputationCoordinatorImplBase;
 import coordinatorservice.ComputationResponse;
+import coordinatorservice.Coordinator;
 import coordinatorservice.CreateCoordinatorRequest;
 import coordinatorservice.CreateCoordinatorResponse;
 import coordinatorservice.DeleteCoordinatorRequest;
@@ -18,8 +19,6 @@ import coordinatorservice.StatusRequest;
 import coordinatorservice.StatusResponse;
 import coordinatorservice.UpdateCoordinatorRequest;
 import coordinatorservice.UpdateCoordinatorResponse;
-import coordinatorservice.Coordinator;
-
 import io.grpc.stub.StreamObserver;
 
 public class ComputationCoordinatorServiceImpl extends ComputationCoordinatorImplBase {
@@ -66,7 +65,7 @@ public class ComputationCoordinatorServiceImpl extends ComputationCoordinatorImp
 
     @Override
     public void deleteCoordinator(DeleteCoordinatorRequest request, StreamObserver<DeleteCoordinatorResponse> responseObserver) {
-        String id = request.getId();
+        request.getId();
         DeleteCoordinatorResponse response = DeleteCoordinatorResponse.newBuilder()
             .setSuccess(true)
             .build();

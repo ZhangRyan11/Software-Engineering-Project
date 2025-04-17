@@ -1,8 +1,6 @@
 package api;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
@@ -14,7 +12,6 @@ import coordinatorservice.FileRequest;
 import coordinatorservice.NumberListRequest;
 import coordinatorservice.StatusRequest;
 import coordinatorservice.StatusResponse;
-
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
