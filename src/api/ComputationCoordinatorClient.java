@@ -205,8 +205,62 @@ public class ComputationCoordinatorClient {
         }).start();
     }
 
-    // Main method stub - simplified for compilation
+    // Main method for running end-to-end tests with both file and in-memory inputs
     public static void main(String[] args) throws Exception {
-        // Implementation omitted for brevity
+        ComputationCoordinatorClient client = new ComputationCoordinatorClient();
+        
+        try {
+            // Connect to the computation coordinator server
+            client.init("localhost", 50052);
+            
+            // Test 1: Submit in-memory number list
+            System.out.println("TEST 1: IN-MEMORY NUMBER LIST");
+            List<Double> numbers = new java.util.ArrayList<>();
+            numbers.add(5.0);
+            numbers.add(10.0);
+            numbers.add(15.0);
+            numbers.add(20.0);
+            numbers.add(25.0);
+            
+            String outputFile1 = "in-memory-test-output.txt";
+            client.submitNumberList(numbers, outputFile1, ",");
+            
+            // Wait a bit for the first test to complete
+            Thread.sleep(5000);
+            
+            // Test 2: Submit file input
+            System.out.println("\nTEST 2: FILE INPUT");
+            String inputFile = "input.txt";
+            String outputFile2 = "file-test-output.txt";
+            client.submitFile(inputFile, outputFile2, ",");
+            
+            // Wait for test completion
+            Thread.sleep(10000);
+            
+            // Verify results by checking if output files exist
+            System.out.println("\nVERIFYING RESULTS:");
+            verifyOutputFile(outputFile1);
+            verifyOutputFile(outputFile2);
+            
+        } finally {
+            // Clean up
+            client.shutdown();
+        }
+    }
+    
+    private static void verifyOutputFile(String filename) {
+        java.io.File file = new java.io.File(filename);
+        if (file.exists()) {
+            System.out.println("✅ Output file created: " + filename);
+            System.out.println("   Contents: ");
+            try {
+                java.util.List<String> lines = java.nio.file.Files.readAllLines(file.toPath());
+                lines.forEach(line -> System.out.println("   " + line));
+            } catch (Exception e) {
+                System.out.println("   Unable to read file contents: " + e.getMessage());
+            }
+        } else {
+            System.out.println("❌ Output file not found: " + filename);
+        }
     }
 }
