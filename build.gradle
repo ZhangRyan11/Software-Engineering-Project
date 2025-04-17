@@ -19,6 +19,7 @@ dependencies {
     implementation "io.grpc:grpc-services:${grpcVersion}"
     implementation "io.grpc:grpc-stub:${grpcVersion}"
     implementation "io.grpc:grpc-netty:${grpcVersion}"
+    implementation "com.google.protobuf:protobuf-java:${protobufVersion}"
     compileOnly "org.apache.tomcat:annotations-api:6.0.53"
     
     testImplementation "io.grpc:grpc-testing:${grpcVersion}"
@@ -63,14 +64,20 @@ protobuf {
     generatedFilesBaseDir = "$projectDir/build/generated"
 }
 
+// Important: Clean generated files
+clean {
+    delete protobuf.generatedFilesBaseDir
+}
+
+// Ensure proto generation happens before compilation
+tasks.withType(JavaCompile) {
+    dependsOn 'generateProto'
+}
+
 test {
     useJUnitPlatform()
     filter {
         excludeTestsMatching "project.annotations.Assignment*"
         setFailOnNoMatchingTests(false)
     }
-}
-
-clean {
-    delete protobuf.generatedFilesBaseDir
 }

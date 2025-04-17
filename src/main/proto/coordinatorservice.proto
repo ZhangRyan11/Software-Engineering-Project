@@ -17,6 +17,7 @@ service ComputationCoordinator {
     rpc GetStatus (StatusRequest) returns (StatusResponse);
 }
 
+// Messages with builders
 message JobStatus {
     enum JobStatusType {
         UNKNOWN = 0;
@@ -33,9 +34,10 @@ message JobStatus {
 }
 
 message NumberListRequest {
-    repeated double numbers = 1;
-    string output_file = 2;
-    string delimiter = 3;
+    string job_id = 1;
+    repeated double numbers = 2;
+    string output_file = 3;
+    string delimiter = 4;
 }
 
 message FileRequest {
