@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -122,13 +123,15 @@ public class ComputationCoordinatorClient {
     }
 
     // Polls the server for job status until completion.
+    // Runs in a separate thread to avoid blocking the main thread.
+    // @param jobId The ID of the job to monitor
     private void pollJobStatus(String jobId) {
         // Create a new thread to handle polling
         new Thread(() -> {
-            boolean completed = false;
+            final AtomicBoolean completed = new AtomicBoolean(false);
 
             // Continue polling until job is completed
-            while (!completed) {
+            while (!completed.get()) {
                 try {
                     // Wait between polling attempts to avoid overwhelming the server
                     Thread.sleep(1000);
@@ -141,6 +144,7 @@ public class ComputationCoordinatorClient {
                     // Make asynchronous call to check status
                     asyncStub.getStatus(request, new io.grpc.stub.StreamObserver<StatusResponse>() {
                         // Process status updates from the server.
+                        // Displays results when computation is completed.
                         @Override
                         public void onNext(StatusResponse response) {
                             if (response.getCompleted()) {
@@ -171,7 +175,7 @@ public class ComputationCoordinatorClient {
                                 synchronized (Thread.currentThread()) {
                                     Thread.currentThread().notifyAll();
                                 }
-                                completed = true;
+                                completed.set(true);  // Use AtomicBoolean's set method
                             } else {
                                 logger.info("Job still in progress...");
                             }
@@ -183,7 +187,7 @@ public class ComputationCoordinatorClient {
                             synchronized (Thread.currentThread()) {
                                 Thread.currentThread().notifyAll();
                             }
-                            completed = true;
+                            completed.set(true);  // Use AtomicBoolean's set method
                         }
 
                         @Override
