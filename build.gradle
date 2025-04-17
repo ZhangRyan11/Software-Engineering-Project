@@ -34,6 +34,8 @@ sourceSets {
     main {
         proto {
             srcDir 'src/main/proto'
+            // Don't include the protobuf directory to avoid duplicates
+            // If you need files from here, move them to src/main/proto
         }
         java {
             srcDirs 'src',
@@ -88,4 +90,14 @@ test {
         excludeTestsMatching "project.annotations.Assignment*"
         setFailOnNoMatchingTests(false)
     }
+}
+
+// Add duplicate handling strategy for processResources task
+tasks.withType(ProcessResources) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+// Ensure the same strategy for copy tasks
+tasks.withType(Copy) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
