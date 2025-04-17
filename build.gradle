@@ -38,9 +38,10 @@ sourceSets {
             // If you need files from here, move them to src/main/proto
         }
         java {
-            srcDirs 'src',
-                    'build/generated/source/proto/main/grpc',
-                    'build/generated/source/proto/main/java'
+            srcDir 'src'
+            srcDir 'build/generated/source/proto/main/grpc'
+            srcDir 'build/generated/source/proto/main/java'
+            exclude 'main/java/**'  // Exclude main/java from src to prevent nesting issues
         }
     }
     test {
