@@ -17,7 +17,6 @@ service ComputationCoordinator {
     rpc GetStatus (StatusRequest) returns (StatusResponse);
 }
 
-// Messages with builders
 message JobStatus {
     enum JobStatusType {
         UNKNOWN = 0;
@@ -34,16 +33,17 @@ message JobStatus {
 }
 
 message NumberListRequest {
-    string job_id = 1;
-    repeated double numbers = 2;
-    string output_file = 3;
-    string delimiter = 4;
+    repeated double numbers = 1;
+    string output_file = 2;
+    string delimiter = 3;
+    string job_id = 4;  // Added for compatibility
 }
 
 message FileRequest {
     string file_path = 1;
     string output_file = 2;
     string delimiter = 3;
+    bytes file_content = 4;  // Optional binary content
 }
 
 message StatusRequest {
@@ -53,6 +53,8 @@ message StatusRequest {
 message StatusResponse {
     JobStatus job_status = 1;
     repeated double results = 2;
+    bool completed = 3;
+    bool success = 4;
 }
 
 message ComputationResponse {

@@ -3,13 +3,23 @@ package api;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import coordinator.Coordinator;
 import coordinatorservice.ComputationCoordinatorGrpc.ComputationCoordinatorImplBase;
-import coordinatorservice.CoordinatorServiceProto.ComputationResponse;
-import coordinatorservice.CoordinatorServiceProto.FileRequest;
-import coordinatorservice.CoordinatorServiceProto.NumberListRequest;
-import coordinatorservice.CoordinatorServiceProto.StatusRequest;
-import coordinatorservice.CoordinatorServiceProto.StatusResponse;
+import coordinatorservice.ComputationResponse;
+import coordinatorservice.CreateCoordinatorRequest;
+import coordinatorservice.CreateCoordinatorResponse;
+import coordinatorservice.DeleteCoordinatorRequest;
+import coordinatorservice.DeleteCoordinatorResponse;
+import coordinatorservice.FileRequest;
+import coordinatorservice.GetCoordinatorRequest;
+import coordinatorservice.GetCoordinatorResponse;
+import coordinatorservice.JobStatus;
+import coordinatorservice.NumberListRequest;
+import coordinatorservice.StatusRequest;
+import coordinatorservice.StatusResponse;
+import coordinatorservice.UpdateCoordinatorRequest;
+import coordinatorservice.UpdateCoordinatorResponse;
+import coordinatorservice.Coordinator;
+
 import io.grpc.stub.StreamObserver;
 
 public class ComputationCoordinatorServiceImpl extends ComputationCoordinatorImplBase {
@@ -79,6 +89,8 @@ public class ComputationCoordinatorServiceImpl extends ComputationCoordinatorImp
             .setStatus(JobStatus.JobStatusType.PENDING)
             .setMessage("Processing")
             .setProgress(0.0)
+            .setCompleted(false)
+            .setSuccess(false)
             .build());
             
         responseObserver.onNext(response);

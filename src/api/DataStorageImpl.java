@@ -1,7 +1,11 @@
 package api;
 
-import com.example.datastore.DatastoreProto.*;
 import com.example.datastore.DataStorageGrpc.DataStorageImplBase;
+import com.example.datastore.DataRequest;
+import com.example.datastore.DataResponse; 
+import com.example.datastore.Data;
+import com.example.datastore.SaveDataResponse;
+
 import io.grpc.stub.StreamObserver;
 
 public class DataStorageImpl extends DataStorageImplBase {

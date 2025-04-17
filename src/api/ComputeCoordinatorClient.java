@@ -7,12 +7,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import coordinatorservice.ComputationCoordinatorGrpc;
-import coordinatorservice.ComputationCoordinatorGrpc.ComputationCoordinatorBlockingStub;
-import coordinatorservice.CoordinatorServiceProto.ComputationResponse;
-import coordinatorservice.CoordinatorServiceProto.Coordinator;
-import coordinatorservice.CoordinatorServiceProto.CreateCoordinatorRequest;
-import coordinatorservice.CoordinatorServiceProto.CreateCoordinatorResponse;
-import coordinatorservice.CoordinatorServiceProto.NumberListRequest;
+import coordinatorservice.ComputationResponse;
+import coordinatorservice.Coordinator;
+import coordinatorservice.CreateCoordinatorRequest;
+import coordinatorservice.CreateCoordinatorResponse;
+import coordinatorservice.NumberListRequest;
+
 import io.grpc.Channel;
 import io.grpc.Grpc;
 import io.grpc.InsecureChannelCredentials;
@@ -21,7 +21,7 @@ import io.grpc.StatusRuntimeException;
 
 public class ComputeCoordinatorClient {
     private static final Logger logger = Logger.getLogger(ComputeCoordinatorClient.class.getName());
-    private final ComputationCoordinatorBlockingStub blockingStub;
+    private final ComputationCoordinatorGrpc.ComputationCoordinatorBlockingStub blockingStub;
 
     public ComputeCoordinatorClient(Channel channel) {
         blockingStub = ComputationCoordinatorGrpc.newBlockingStub(channel);

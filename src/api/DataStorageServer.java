@@ -6,7 +6,7 @@ import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.Server;
 import io.grpc.protobuf.services.ProtoReflectionService;
-import datastore.DataStorageGrpc;
+import com.example.datastore.DataStorageGrpc;
 
 public class DataStorageServer {
     private Server server;
@@ -38,7 +38,6 @@ public class DataStorageServer {
     }
 
     // Await termination on the main thread since the grpc library uses daemon threads.
-     
     private void blockUntilShutdown() throws InterruptedException {
         if (server != null) {
             server.awaitTermination();
@@ -46,7 +45,7 @@ public class DataStorageServer {
     }
 
     public static void main(String[] args) throws Exception {
-        DataStorageServer server = new DataStorageServer(); // Boilerplate: Changed name of class
+        DataStorageServer server = new DataStorageServer();
         server.start();
         server.blockUntilShutdown();
     }

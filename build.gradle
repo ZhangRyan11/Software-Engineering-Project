@@ -20,6 +20,7 @@ dependencies {
     implementation "io.grpc:grpc-stub:${grpcVersion}"
     implementation "io.grpc:grpc-netty:${grpcVersion}"
     implementation "com.google.protobuf:protobuf-java:${protobufVersion}"
+    implementation "javax.annotation:javax.annotation-api:1.3.2"
     compileOnly "org.apache.tomcat:annotations-api:6.0.53"
     
     testImplementation "io.grpc:grpc-testing:${grpcVersion}"
@@ -69,9 +70,16 @@ clean {
     delete protobuf.generatedFilesBaseDir
 }
 
-// Ensure proto generation happens before compilation
+// Force java compilation to depend on proto generation
 tasks.withType(JavaCompile) {
     dependsOn 'generateProto'
+}
+
+// Make IDE refresh after proto generation
+tasks.named('generateProto').configure {
+    doLast {
+        println "Proto files generated in $protobuf.generatedFilesBaseDir"
+    }
 }
 
 test {
