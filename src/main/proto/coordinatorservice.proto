@@ -1,48 +1,98 @@
 syntax = "proto3";
 
+option java_multiple_files = true;
+option java_package = "coordinatorservice";
+option java_outer_classname = "CoordinatorServiceProto";
+
 package coordinatorservice;
 
-service CoordinatorService {
-  rpc GetCoordinator (GetCoordinatorRequest) returns (GetCoordinatorResponse);
-  rpc CreateCoordinator (CreateCoordinatorRequest) returns (CreateCoordinatorResponse);
-  rpc UpdateCoordinator (UpdateCoordinatorRequest) returns (UpdateCoordinatorResponse);
-  rpc DeleteCoordinator (DeleteCoordinatorRequest) returns (DeleteCoordinatorResponse);
+// Service definition
+service ComputationCoordinator {
+    rpc GetCoordinator (GetCoordinatorRequest) returns (GetCoordinatorResponse);
+    rpc CreateCoordinator (CreateCoordinatorRequest) returns (CreateCoordinatorResponse);
+    rpc UpdateCoordinator (UpdateCoordinatorRequest) returns (UpdateCoordinatorResponse);
+    rpc DeleteCoordinator (DeleteCoordinatorRequest) returns (DeleteCoordinatorResponse);
+    rpc SubmitNumberList (NumberListRequest) returns (ComputationResponse);
+    rpc SubmitFile (FileRequest) returns (ComputationResponse);
+    rpc GetStatus (StatusRequest) returns (StatusResponse);
+}
+
+message JobStatus {
+    enum JobStatusType {
+        UNKNOWN = 0;
+        PENDING = 1;
+        PROCESSING = 2;
+        COMPLETED = 3;
+        FAILED = 4;
+    }
+    JobStatusType status = 1;
+    string message = 2;
+    double progress = 3;
+    bool completed = 4;
+    bool success = 5;
+}
+
+message NumberListRequest {
+    repeated double numbers = 1;
+    string output_file = 2;
+    string delimiter = 3;
+}
+
+message FileRequest {
+    string file_path = 1;
+    string output_file = 2;
+    string delimiter = 3;
+}
+
+message StatusRequest {
+    string job_id = 1;
+}
+
+message StatusResponse {
+    JobStatus job_status = 1;
+    repeated double results = 2;
+}
+
+message ComputationResponse {
+    string job_id = 1;
+    bool success = 2;
+    string message = 3;
 }
 
 message GetCoordinatorRequest {
-  string id = 1;
+    string id = 1;
 }
 
 message GetCoordinatorResponse {
-  Coordinator coordinator = 1;
+    Coordinator coordinator = 1;
 }
 
 message CreateCoordinatorRequest {
-  Coordinator coordinator = 1;
+    Coordinator coordinator = 1;
 }
 
 message CreateCoordinatorResponse {
-  Coordinator coordinator = 1;
+    Coordinator coordinator = 1;
 }
 
 message UpdateCoordinatorRequest {
-  Coordinator coordinator = 1;
+    Coordinator coordinator = 1;
 }
 
 message UpdateCoordinatorResponse {
-  Coordinator coordinator = 1;
+    Coordinator coordinator = 1;
 }
 
 message DeleteCoordinatorRequest {
-  string id = 1;
+    string id = 1;
 }
 
 message DeleteCoordinatorResponse {
-  bool success = 1;
+    bool success = 1;
 }
 
 message Coordinator {
-  string id = 1;
-  string name = 2;
-  string email = 3;
+    string id = 1;
+    string name = 2;
+    string email = 3;
 }

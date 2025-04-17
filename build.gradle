@@ -60,6 +60,7 @@ protobuf {
             grpc {}
         }
     }
+    generatedFilesBaseDir = "$projectDir/build/generated"
 }
 
 test {
@@ -68,4 +69,8 @@ test {
         excludeTestsMatching "project.annotations.Assignment*"
         setFailOnNoMatchingTests(false)
     }
+}
+
+clean {
+    delete protobuf.generatedFilesBaseDir
 }
