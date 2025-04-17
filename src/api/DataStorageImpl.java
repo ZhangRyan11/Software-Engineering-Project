@@ -1,9 +1,10 @@
 package api;
 
-import datastore.DataStorageGrpc;
-import datastore.Datastoreservice.WriteResponseStatus;
+import com.example.datastore.DatastoreProto.*;
+import com.example.datastore.DataStorageGrpc.DataStorageImplBase;
+import io.grpc.stub.StreamObserver;
 
-public class DataStorageImpl extends DataStorageGrpc.DataStorageImplBase {
+public class DataStorageImpl extends DataStorageImplBase {
     private final DataStoreImpl dataStore;
     
     public DataStorageImpl(DataStoreImpl dataStore) {
@@ -11,38 +12,32 @@ public class DataStorageImpl extends DataStorageGrpc.DataStorageImplBase {
     }
     
     @Override
-    public void read(datastore.Datastoreservice.ReadRequest request, 
-                    io.grpc.stub.StreamObserver<datastore.Datastoreservice.ReadResponse> responseObserver) {
-        // Implement read operation using dataStore
-        String key = request.getSource();
-        String value = dataStore.read(key);
+    public void getData(DataRequest request, StreamObserver<DataResponse> responseObserver) {
+        String id = request.getId();
+        String value = dataStore.read(id);
         
-        datastore.Datastoreservice.ReadResponse.Builder responseBuilder = 
-            datastore.Datastoreservice.ReadResponse.newBuilder();
+        Data data = Data.newBuilder()
+            .setId(id)
+            .setValue(value)
+            .build();
             
-        if (value != null) {
-            // Convert string to ASCII values
-            for (char c : value.toCharArray()) {
-                responseBuilder.addData((int)c);
-            }
-        }
+        DataResponse response = DataResponse.newBuilder()
+            .setData(data)
+            .build();
         
-        responseObserver.onNext(responseBuilder.build());
+        responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
     
     @Override
-    public void write(datastore.Datastoreservice.WriteRequest request, 
-                     io.grpc.stub.StreamObserver<datastore.Datastoreservice.WriteResponse> responseObserver) {
-        // Implement write operation using dataStore
-        String key = request.getDestination();
-        String value = request.getWriteData();
-        boolean success = dataStore.write(key, value);
+    public void saveData(Data request, StreamObserver<SaveDataResponse> responseObserver) {
+        String id = request.getId();
+        String value = request.getValue();
+        boolean success = dataStore.write(id, value);
         
-        datastore.Datastoreservice.WriteResponse response = 
-            datastore.Datastoreservice.WriteResponse.newBuilder()
-                .setStatus(success ? WriteResponseStatus.SUCCESS : WriteResponseStatus.FAILURE)
-                .build();
+        SaveDataResponse response = SaveDataResponse.newBuilder()
+            .setSuccess(success)
+            .build();
             
         responseObserver.onNext(response);
         responseObserver.onCompleted();

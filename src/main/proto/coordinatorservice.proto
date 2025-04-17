@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package coordinatorservice;
+
+service CoordinatorService {
+  rpc GetCoordinator (GetCoordinatorRequest) returns (GetCoordinatorResponse);
+  rpc CreateCoordinator (CreateCoordinatorRequest) returns (CreateCoordinatorResponse);
+  rpc UpdateCoordinator (UpdateCoordinatorRequest) returns (UpdateCoordinatorResponse);
+  rpc DeleteCoordinator (DeleteCoordinatorRequest) returns (DeleteCoordinatorResponse);
+}
+
+message GetCoordinatorRequest {
+  string id = 1;
+}
+
+message GetCoordinatorResponse {
+  Coordinator coordinator = 1;
+}
+
+message CreateCoordinatorRequest {
+  Coordinator coordinator = 1;
+}
+
+message CreateCoordinatorResponse {
+  Coordinator coordinator = 1;
+}
+
+message UpdateCoordinatorRequest {
+  Coordinator coordinator = 1;
+}
+
+message UpdateCoordinatorResponse {
+  Coordinator coordinator = 1;
+}
+
+message DeleteCoordinatorRequest {
+  string id = 1;
+}
+
+message DeleteCoordinatorResponse {
+  bool success = 1;
+}
+
+message Coordinator {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+}

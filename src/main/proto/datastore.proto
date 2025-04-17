@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package datastore;
+
+option java_package = "com.example.datastore";
+option java_outer_classname = "DatastoreProto";
+
+message Data {
+  string id = 1;
+  string name = 2;
+  string value = 3;
+}
+
+service DatastoreService {
+  rpc GetData (DataRequest) returns (DataResponse);
+  rpc SaveData (Data) returns (SaveDataResponse);
+}
+
+message DataRequest {
+  string id = 1;
+}
+
+message DataResponse {
+  Data data = 1;
+}
+
+message SaveDataResponse {
+  bool success = 1;
+}
