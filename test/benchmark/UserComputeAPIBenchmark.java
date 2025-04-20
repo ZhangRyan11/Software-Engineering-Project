@@ -4,6 +4,7 @@ package benchmark;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
 import api.OptimizedUserComputeAPI;
 import api.PrototypeUserComputeAPI;
@@ -23,14 +24,22 @@ public class UserComputeAPIBenchmark {
         
         System.out.println("Warming up implementations...");
         warmup(original);
+        cleanupResources();
         warmup(optimized);
+        cleanupResources();
         
         List<Long> originalTimes = new ArrayList<>();
         List<Long> optimizedTimes = new ArrayList<>();
         
         for (int m = 0; m < MEASUREMENTS; m++) {
+            // Clean up before each measurement
+            cleanupResources();
+            
             long originalTime = measurePerformance(original);
+            cleanupResources();
+            
             long optimizedTime = measurePerformance(optimized);
+            cleanupResources();
             
             originalTimes.add(originalTime);
             optimizedTimes.add(optimizedTime);
@@ -56,6 +65,22 @@ public class UserComputeAPIBenchmark {
         
         assertTrue(avgOptimized/avgOriginal <= IMPROVEMENT_TARGET, 
             String.format("Required 10%% improvement, actual improvement: %.3f%%", actualPercentImprovement));
+    }
+    
+    /**
+     * Helper method to clean up resources between benchmark runs
+     */
+    private void cleanupResources() {
+        // Force garbage collection and wait for finalization
+        System.gc();
+        System.runFinalization();
+        
+        try {
+            // Allow some time for JVM to stabilize between runs
+            TimeUnit.MILLISECONDS.sleep(200);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
     
     private void warmup(UserComputeAPI api) {
