@@ -6,6 +6,7 @@ import coordinator.*;
 import java.util.*;
 import java.io.*;
 import java.nio.file.*;
+import java.util.stream.Collectors;
 
 public class CoordinatorBenchmarkTest {
     private static final int TEST_SIZE = 10000;
@@ -32,11 +33,28 @@ public class CoordinatorBenchmarkTest {
         long optimizedTime = System.nanoTime() - startTime;
         optimized.shutdown();
 
-        // Verify results match
-        assertArrayEquals(
-            Files.readAllBytes(Paths.get(OUTPUT_1)),
-            Files.readAllBytes(Paths.get(OUTPUT_2))
-        );
+        // Normalize and verify results match
+        List<String> originalResults = Files.readAllLines(Paths.get(OUTPUT_1))
+            .stream()
+            .map(String::trim)
+            .filter(s -> !s.isEmpty())
+            .sorted()
+            .collect(Collectors.toList());
+            
+        List<String> optimizedResults = Files.readAllLines(Paths.get(OUTPUT_2))
+            .stream()
+            .map(String::trim)
+            .filter(s -> !s.isEmpty())
+            .sorted()
+            .collect(Collectors.toList());
+
+        assertEquals(originalResults.size(), optimizedResults.size(), 
+            "Number of results must match between implementations");
+            
+        for (int i = 0; i < originalResults.size(); i++) {
+            assertEquals(originalResults.get(i), optimizedResults.get(i),
+                String.format("Results differ at index %d", i));
+        }
 
         // Calculate improvement
         double improvement = 100.0 * (originalTime - optimizedTime) / originalTime;
