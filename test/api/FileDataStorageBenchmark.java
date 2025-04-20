@@ -131,6 +131,8 @@ public class FileDataStorageBenchmark {
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
+            // Restore the interrupt status
+            Thread.currentThread().interrupt();
         }
         
         long startTime = System.nanoTime();
@@ -150,6 +152,8 @@ public class FileDataStorageBenchmark {
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
+            // Restore the interrupt status
+            Thread.currentThread().interrupt();
         }
         
         long startTime = System.nanoTime();

@@ -65,7 +65,10 @@ public class UserComputeAPIBenchmark {
                 api.setOutputDestination("warmup");
                 api.setDelimiters(",");
                 api.processRequest();
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+                // Exceptions during warmup can be ignored as we're only
+                // interested in JVM optimization, not functional correctness
+            }
         }
     }
     
@@ -78,7 +81,10 @@ public class UserComputeAPIBenchmark {
                 api.setOutputDestination("output" + (i % 10));
                 api.setDelimiters(",");
                 api.processRequest();
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+                // Exceptions during benchmarking are expected and don't affect
+                // the timing measurements which is our primary concern
+            }
         }
         
         return (System.nanoTime() - start) / 1_000_000;
