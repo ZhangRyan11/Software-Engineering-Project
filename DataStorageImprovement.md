@@ -23,8 +23,8 @@ The `FileDataStorageBenchmark.java` test demonstrates the following improvements
 
 #### Read Operations
 - Original implementation: ~400ms per 20MB file
-- Optimized implementation: ~250ms per 20MB file
-- Performance improvement: ~37%
+- Optimized implementation: ~380ms per 20MB file
+- Performance improvement: ~5%
 
 ### Key Optimizations
 
