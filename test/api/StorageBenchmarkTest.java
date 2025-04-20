@@ -1,8 +1,9 @@
-package test;
+package api;
 
-import api.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import java.io.IOException;
 
 public class StorageBenchmarkTest {
     private static final int ITERATIONS = 1000;
