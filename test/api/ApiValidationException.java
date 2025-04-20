@@ -1,7 +1,12 @@
 package api;
 
 public class ApiValidationException extends RuntimeException {
-    public ApiValidationException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public ApiValidationException(String message) {
         super(message);
     }
 }
