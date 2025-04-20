@@ -1,11 +1,12 @@
 package benchmark;
 
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
 import api.OptimizedUserComputeAPI;
 import api.PrototypeUserComputeAPI;
 import api.UserComputeAPI;
@@ -15,6 +16,48 @@ public class UserComputeAPIBenchmark {
     private static final int WARMUP_ITERATIONS = 10;
     private static final int MEASUREMENTS = 1;
     private static final double IMPROVEMENT_TARGET = 0.90; // 90% of original time = 10% improvement
+
+    @BeforeAll
+    public static void setupCleanupHooks() {
+        // Force initial cleanup
+        forceSystemCleanup();
+        
+        // Register emergency shutdown hook
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Executing emergency cleanup on shutdown...");
+            forceSystemCleanup();
+        }));
+    }
+    
+    @AfterAll
+    public static void tearDown() {
+        System.out.println("Performing final cleanup...");
+        forceSystemCleanup();
+    }
+    
+    /**
+     * More aggressive system-wide cleanup
+     */
+    private static void forceSystemCleanup() {
+        // Multiple GC calls help with stubborn resources
+        for (int i = 0; i < 5; i++) {
+            System.gc();
+            System.runFinalization();
+            try {
+                TimeUnit.MILLISECONDS.sleep(50);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
+        
+        // Try to release file handles by suggesting OS file handle cleanup
+        try {
+            TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 
     @Test
     public void benchmarkComparison() {
