@@ -1,14 +1,15 @@
 package api;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class StorageBenchmarkTest {
     private static final int ITERATIONS = 1000;
