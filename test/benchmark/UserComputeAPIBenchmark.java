@@ -1,10 +1,10 @@
 package benchmark;
 
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterAll;
 import api.OptimizedUserComputeAPI;
 import api.PrototypeUserComputeAPI;
 import api.UserComputeAPI;
@@ -56,20 +56,6 @@ public class UserComputeAPIBenchmark {
         
         assertTrue(avgOptimized/avgOriginal <= IMPROVEMENT_TARGET, 
             String.format("Required 10%% improvement, actual improvement: %.3f%%", actualPercentImprovement));
-    }
-    
-    @AfterAll
-    public static void cleanup() {
-        // Force garbage collection to release any open file handles
-        System.gc();
-        System.runFinalization();
-        
-        // Allow some time for cleanup processes to complete
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
     }
     
     private void warmup(UserComputeAPI api) {
