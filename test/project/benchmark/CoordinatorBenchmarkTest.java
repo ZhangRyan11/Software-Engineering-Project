@@ -26,7 +26,7 @@ public class CoordinatorBenchmarkTest {
         original.shutdown();
 
         // Test optimized implementation
-        OptimizedCoordinator optimized = new OptimizedCoordinator();
+        OptimizedMultiThreadedCoordinator optimized = new OptimizedMultiThreadedCoordinator();
         startTime = System.nanoTime();
         optimized.startComputation(TEST_FILE, OUTPUT_2, ',');
         long optimizedTime = System.nanoTime() - startTime;

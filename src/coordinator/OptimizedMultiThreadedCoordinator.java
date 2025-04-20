@@ -9,7 +9,7 @@ public class OptimizedMultiThreadedCoordinator extends AbstractCoordinator {
     private final ExecutorService executorService;
     private final ConcurrentHashMap<Integer, List<Integer>> cache;
     
-    public OptimizedCoordinator() {
+    public OptimizedMultiThreadedCoordinator() {
         this.executorService = Executors.newVirtualThreadPerTaskExecutor();
         this.cache = new ConcurrentHashMap<>();
     }
