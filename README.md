@@ -42,18 +42,4 @@ This system calculates the factorization of input integers. For a given integer 
 3. If true, `i` is added to the list of factors.
 4. The list of factors is returned as output.
 
-## Performance Improvements
-
-### Storage Performance Benchmark
-
-The original `FileDataStorage` implementation was optimized by creating a new `BufferedFileDataStorage` class that uses buffered I/O operations. The benchmark test shows significant performance improvements:
-
-- Original implementation: ~2500ms for 1000 operations
-- Buffered implementation: ~1800ms for 1000 operations
-- Performance improvement: ~28%
-
-The main bottleneck was using unbuffered file operations (`Files.readString` and `Files.writeString`). The fix implements buffered reading and writing with an 8KB buffer size, which reduces the number of system calls and improves overall performance.
-
-You can find the benchmark test here: [StorageBenchmarkTest.java](src/test/StorageBenchmarkTest.java)
-
 ![Untitled Page-1](https://github.com/user-attachments/assets/c835f470-3b26-4f55-9f3f-210651e784a4)
