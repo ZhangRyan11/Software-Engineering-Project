@@ -61,17 +61,16 @@ public class OptimizedMultiThreadedCoordinator extends AbstractCoordinator {
 
     private List<Integer> computeFactorsOptimized(int number) {
         List<Integer> factors = new ArrayList<>();
-        int sqrt = (int) Math.sqrt(number);
+        int square = number * number;
         
-        for (int i = 1; i <= sqrt; i++) {
+        
+        for (int i = 1; i <= square; i++) {
             if (number % i == 0) {
                 factors.add(i);
-                if (i != number / i) {
-                    factors.add(number / i);
-                }
+ 
             }
         }
-        Collections.sort(factors);
+
         return factors;
     }
 
@@ -80,6 +79,11 @@ public class OptimizedMultiThreadedCoordinator extends AbstractCoordinator {
             factors.stream()
                 .map(String::valueOf)
                 .collect(Collectors.joining(" ")));
+    }
+
+    @Override
+    protected String processNumber(int number) {
+        return processWithCache(number);
     }
 
     public void shutdown() {
