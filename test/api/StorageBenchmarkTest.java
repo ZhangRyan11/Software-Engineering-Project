@@ -38,7 +38,7 @@ public class StorageBenchmarkTest {
     @Test
     public void compareStoragePerformance() throws IOException {
         // Create initial test file
-        Files.writeString(Path.of(TEST_FILE), "Initial content");
+        Files.writeString(Path.of(TEST_FILE), "Initial string");
 
         System.out.println("Starting warmup...");
         // Warmup
