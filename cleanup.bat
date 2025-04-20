@@ -1,0 +1,9 @@
+@echo off
+echo Stopping Java processes that might lock files...
+taskkill /F /IM java.exe /T 2>nul
+echo Cleaning up build directory...
+rmdir /S /Q "build"
+echo Creating new build directory...
+mkdir build
+echo Cleanup complete. Please restart your IDE and try building again.
+pause
