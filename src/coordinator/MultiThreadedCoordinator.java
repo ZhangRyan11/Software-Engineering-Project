@@ -6,9 +6,11 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
- //Multi-threaded implementation of the NetworkAPI.
- //Uses a thread pool to process computation tasks in parallel.
+// Multi-threaded implementation of the NetworkAPI.
+// Uses a thread pool to process computation tasks in parallel.
 
 public class MultiThreadedCoordinator extends AbstractCoordinator {
     
@@ -20,6 +22,34 @@ public class MultiThreadedCoordinator extends AbstractCoordinator {
     public MultiThreadedCoordinator() {
         // Create a fixed thread pool with a reasonable upper bound
         this.executorService = Executors.newFixedThreadPool(MAX_THREADS);
+    }
+
+    private String formatResult(int number, List<Integer> factors) {
+        return String.format("Factors of %d: %s", number, 
+            factors.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(" ")));
+    }
+
+    private List<Integer> computeFactors(int number) {
+        List<Integer> factors = new ArrayList<>();
+        int sqrt = (int) Math.sqrt(number);
+        
+        for (int i = 1; i <= sqrt; i++) {
+            if (number % i == 0) {
+                factors.add(i);
+                if (i != number / i) {
+                    factors.add(number / i);
+                }
+            }
+        }
+        Collections.sort(factors);
+        return factors;
+    }
+
+    @Override
+    protected String processNumber(int number) {
+        return formatResult(number, computeFactors(number));
     }
     
     @Override
@@ -51,9 +81,8 @@ public class MultiThreadedCoordinator extends AbstractCoordinator {
         }
     }
     
-     //Shuts down the executor
-     //Call on this method when the coordinator is no longer needed.
-     
+    // Shuts down the executor
+    // Call on this method when the coordinator is no longer needed.
     public void shutdown() {
         if (executorService != null && !executorService.isShutdown()) {
             executorService.shutdown();
