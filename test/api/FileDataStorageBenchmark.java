@@ -1,14 +1,14 @@
 package api;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Random;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Benchmark test for comparing FileDataStorage and OptimizedFileDataStorage.
@@ -128,7 +128,10 @@ public class FileDataStorageBenchmark {
         
         // Clear OS file cache by forcing GC and waiting
         System.gc();
-        try { Thread.sleep(100); } catch (InterruptedException e) {}
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+        }
         
         long startTime = System.nanoTime();
         for (int i = 0; i < iterations; i++) {
@@ -144,7 +147,10 @@ public class FileDataStorageBenchmark {
         
         // Clear OS file cache by forcing GC and waiting
         System.gc();
-        try { Thread.sleep(100); } catch (InterruptedException e) {}
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+        }
         
         long startTime = System.nanoTime();
         for (int i = 0; i < iterations; i++) {

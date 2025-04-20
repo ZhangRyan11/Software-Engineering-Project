@@ -1,11 +1,13 @@
 package benchmark;
 
-import api.*;
-import project.annotations.ValidationException;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Test;
+import api.OptimizedUserComputeAPI;
+import api.PrototypeUserComputeAPI;
+import api.UserComputeAPI;
 
 public class UserComputeAPIBenchmark {
     private static final int ITERATIONS = 100;
