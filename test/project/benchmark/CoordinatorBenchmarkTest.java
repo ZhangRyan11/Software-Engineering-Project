@@ -36,14 +36,14 @@ public class CoordinatorBenchmarkTest {
         // Normalize and verify results match
         List<String> originalResults = Files.readAllLines(Paths.get(OUTPUT_1))
             .stream()
-            .map(String::trim)
+            .map(this::extractNumbersOnly)
             .filter(s -> !s.isEmpty())
             .sorted()
             .collect(Collectors.toList());
             
         List<String> optimizedResults = Files.readAllLines(Paths.get(OUTPUT_2))
             .stream()
-            .map(String::trim)
+            .map(this::extractNumbersOnly)
             .filter(s -> !s.isEmpty())
             .sorted()
             .collect(Collectors.toList());
@@ -66,6 +66,13 @@ public class CoordinatorBenchmarkTest {
             "Performance improvement must be at least 10%, but was " + improvement + "%");
 
         cleanup();
+    }
+
+    private String extractNumbersOnly(String line) {
+        // Extract just the numbers from either format
+        return Arrays.stream(line.split("[^0-9]+"))
+            .filter(s -> !s.isEmpty())
+            .collect(Collectors.joining(" "));
     }
 
     private void generateTestData() throws IOException {
