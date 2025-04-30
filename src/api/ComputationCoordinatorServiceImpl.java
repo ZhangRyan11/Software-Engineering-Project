@@ -132,7 +132,6 @@ public class ComputationCoordinatorServiceImpl extends ComputationCoordinatorImp
     @Override
     public void getStatus(StatusRequest request, StreamObserver<StatusResponse> responseObserver) {
         String jobId = request.getJobId();
-                .setSuccess(false)
         JobStatus status = jobStatus.getOrDefault(jobId, JobStatus.newBuilder()
             .setStatus(JobStatusType.FAILED)
             .setMessage("Job not found")
