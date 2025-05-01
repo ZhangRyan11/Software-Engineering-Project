@@ -1,19 +1,16 @@
 package api;
 
+import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class TestStorageAPI {
-
+    
     @Mock
     private StorageAPI storageAPI;
-
+    
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -23,14 +20,17 @@ public class TestStorageAPI {
     public void smokeTest_ReadData() {
         // Arrange
         StorageRequest mockRequest = mock(StorageRequest.class);
-        StorageResponse mockResponse = mock(StorageResponse.class);
-        when(storageAPI.readData(mockRequest)).thenReturn(mockResponse);
+        when(mockRequest.getPath()).thenReturn("test/path");
+        when(mockRequest.getParams()).thenReturn(new String[]{"param"});
+        
+        // Fix the return type mismatch - storageAPI.readData returns String, not StorageResponse
+        when(storageAPI.readData("test/path", new String[]{"param"})).thenReturn("test data");
 
         // Act
-        storageAPI.readData(mockRequest);
+        storageAPI.readData("test/path", new String[]{"param"});
 
         // Assert
-        verify(storageAPI, times(1)).readData(mockRequest);
+        verify(storageAPI, times(1)).readData("test/path", new String[]{"param"});
     }
 
     @Test

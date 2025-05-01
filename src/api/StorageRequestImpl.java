@@ -5,7 +5,7 @@ package api;
  */
 public class StorageRequestImpl implements StorageRequest {
     private String source;
-    private String delimiter;
+    private String[] delimiters;
     
     /**
      * Creates a new StorageRequestImpl.
@@ -15,7 +15,17 @@ public class StorageRequestImpl implements StorageRequest {
      */
     public StorageRequestImpl(String source, String delimiter) {
         this.source = source;
-        this.delimiter = delimiter;
+        this.delimiters = new String[]{ delimiter };
+    }
+    
+    @Override
+    public String getPath() {
+        return source;
+    }
+    
+    @Override
+    public String[] getParams() {
+        return delimiters;
     }
     
     @Override
@@ -24,7 +34,7 @@ public class StorageRequestImpl implements StorageRequest {
     }
     
     @Override
-    public String getDelimiter() {
-        return delimiter;
+    public String[] getDelimiters() {
+        return delimiters;
     }
 }

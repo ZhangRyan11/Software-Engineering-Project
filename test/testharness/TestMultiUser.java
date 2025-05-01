@@ -14,8 +14,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import coordinator.NetworkAPI;  // Import the NetworkAPI interface
-import coordinator.MultiThreadedCoordinator; // Import your multi-threaded implementation
+import coordinator.MultiThreadedCoordinator;
+import coordinator.NetworkAPI;
 
 public class TestMultiUser {
 	

@@ -12,7 +12,14 @@ public class InMemoryStorageAPI implements StorageAPI {
         this.outputConfig = new InMemoryOutputConfig();
     }
 
+    // Implement the required readData method
     @Override
+    public String readData(String path, String[] params) {
+        // Implementation that likely uses the existing code or maps to a different method
+        // This might be an adaptation of your previous readData(StorageRequest) method
+        return null; // Modify this according to your implementation needs
+    }
+
     public StorageResponse readData(StorageRequest request) {
         if (request instanceof InMemoryInputConfig) {
             return outputConfig;

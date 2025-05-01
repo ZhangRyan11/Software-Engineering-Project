@@ -1,10 +1,7 @@
 package api;
 
-import project.annotations.ProcessAPI;
-
-@ProcessAPI
 public interface StorageAPI {
-    StorageResponse readData(StorageRequest request);
-    void writeData(String destination, String data);
-	String getSource();
+    String getSource();
+    boolean writeData(String destination, String data);
+    String readData(String source, String[] delimiters);
 }

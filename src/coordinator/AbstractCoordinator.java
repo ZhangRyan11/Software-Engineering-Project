@@ -11,6 +11,7 @@ import api.StorageAPI;
 import api.StorageRequest;
 import api.StorageRequestImpl;
 import api.StorageResponse;
+import api.StorageResponseImpl;
 
 
 /**
@@ -39,12 +40,41 @@ public abstract class AbstractCoordinator implements NetworkAPI {
 
         try {
             StorageRequest request = new StorageRequestImpl(inputPath, String.valueOf(delimiter));
-            StorageResponse response = dataStore.readData(request);
+            String source = request.getSource();
+            String[] delimiters = request.getDelimiters();
+            String data = dataStore.readData(source, delimiters);
+            
+            // Create a StorageResponseImpl instead of directly instantiating StorageResponse
+            List<Integer> parsedData = parseDataToIntegers(data);
+            StorageResponse response = new StorageResponseImpl(parsedData, true);
             return response.getNumbers();
         } catch (Exception e) {
             // Fallback to direct file reading if the API fails
             return readInputFileDirectly(inputPath, delimiter);
         }
+    }
+    
+    /**
+     * Parse string data into a list of integers.
+     * 
+     * @param data The string data to parse
+     * @return List of parsed integers
+     */
+    private List<Integer> parseDataToIntegers(String data) {
+        List<Integer> numbers = new ArrayList<>();
+        if (data != null && !data.isEmpty()) {
+            String[] parts = data.split("\\s+|,");
+            for (String part : parts) {
+                try {
+                    if (!part.trim().isEmpty()) {
+                        numbers.add(Integer.parseInt(part.trim()));
+                    }
+                } catch (NumberFormatException ignored) {
+                    // Skip non-numeric values
+                }
+            }
+        }
+        return numbers;
     }
     
     /**
