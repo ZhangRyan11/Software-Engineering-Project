@@ -1,5 +1,8 @@
 package api;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ComputationCoordinatorImpl implements ComputationCoordinator {
     private final ComputationAPI computeEngine;
     private final DataStorage dataStorage;
@@ -21,21 +24,22 @@ public class ComputationCoordinatorImpl implements ComputationCoordinator {
             // Write results if computation was successful
             if (result.isSuccess()) {
                 String outputData = formatOutput(result.getFactors());
-                dataStorage.writeData(request.getDestinationPath(), outputData);
+                dataStorage.writeDataContent(request.getDestinationPath(), outputData);
                 return new ComputeResponseImpl(true, null);
             }
             
-            return new ComputeResponseImpl(false, "Computation failed");
+            return new ComputeResponseImpl(false, "Computation failed: " + result.getMessage());
         } catch (Exception e) {
             return new ComputeResponseImpl(false, e.getMessage());
         }
     }
-
-    private String formatOutput(Iterable<Integer> factors) {
-        StringBuilder sb = new StringBuilder();
-        for (Integer factor : factors) {
-            sb.append(factor).append("\n");
+    
+    private String formatOutput(List<Integer> factors) {
+        if (factors == null || factors.isEmpty()) {
+            return "No factors found";
         }
-        return sb.toString();
+        return "Factors: " + factors.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(", "));
     }
 }

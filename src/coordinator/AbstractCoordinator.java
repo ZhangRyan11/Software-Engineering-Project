@@ -6,6 +6,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import api.ComputationAPI;
+import api.StorageAPI;
+import api.StorageRequest;
+import api.StorageRequestImpl;
+import api.StorageResponse;
+
 
 /**
  * Abstract base class for coordinator implementations.
@@ -13,6 +19,15 @@ import java.util.List;
  */
 public abstract class AbstractCoordinator implements NetworkAPI {
     
+
+    protected final ComputationAPI computationEngine;
+    protected StorageAPI dataStore;
+    
+    public AbstractCoordinator(ComputationAPI computationEngine, StorageAPI dataStore) {
+        this.computationEngine = computationEngine;
+        this.dataStore = dataStore;
+    }
+
     /**
      * Reads input from a file and returns a list of integers.
      * 
@@ -21,6 +36,26 @@ public abstract class AbstractCoordinator implements NetworkAPI {
      * @return List of integers read from the file
      */
     protected List<Integer> readInputFile(String inputPath, char delimiter) {
+
+        try {
+            StorageRequest request = new StorageRequestImpl(inputPath, String.valueOf(delimiter));
+            StorageResponse response = dataStore.readData(request);
+            return response.getNumbers();
+        } catch (Exception e) {
+            // Fallback to direct file reading if the API fails
+            return readInputFileDirectly(inputPath, delimiter);
+        }
+    }
+    
+    /**
+     * Direct implementation of file reading as a fallback method.
+     * 
+     * @param inputPath Path to the input file
+     * @param delimiter Character used to separate values
+     * @return List of integers read from the file
+     */
+    private List<Integer> readInputFileDirectly(String inputPath, char delimiter) {
+
         List<Integer> numbers = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputPath))) {
             String line;

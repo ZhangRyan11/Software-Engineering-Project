@@ -12,47 +12,77 @@ public class OptimizedComputationEngineImpl implements ComputationAPI {
     public ComputationResult compute(String inputData, String[] delimiters) {
         try {
             int number = parseInput(inputData);
-            List<Integer> factors = findFactorsOptimized(number);
+            List<Integer> factors = findFactors(number);
             return new ComputationResultImpl(true, factors);
         } catch (NumberFormatException e) {
             return new ComputationResultImpl(false, null);
         }
     }
-
-    // Parse input string to integer
-    private int parseInput(String input) {
-        return Integer.parseInt(input.trim());
-    }
-
+    
     /**
-     * Optimized method to find factors by only checking up to the square root.
-     * For each factor found, its pair (number/factor) is also a factor.
+     * Finds the maximum value in a list of numbers.
      * 
-     * @param number The number to find factors for
-     * @return List of all factors of the number
+     * @param numbers The list of numbers to search
+     * @return The maximum value
      */
+    @Override
+    public double findMaximum(List<Double> numbers) {
+        if (numbers == null || numbers.isEmpty()) {
+            throw new IllegalArgumentException("List of numbers cannot be null or empty");
+        }
+        return Collections.max(numbers);
+    }
+    
+    @Override
+    public List<Integer> findFactors(int number) {
+        return findFactorsOptimized(number);
+    }
+    
+    @Override
+    public double calculateSum(List<Double> numbers) {
+        if (numbers == null || numbers.isEmpty()) {
+            return 0;
+        }
+        double sum = 0;
+        for (Double num : numbers) {
+            sum += num;
+        }
+        return sum;
+    }
+    
+    @Override
+    public double calculateAverage(List<Double> numbers) {
+        if (numbers == null || numbers.isEmpty()) {
+            return 0;
+        }
+        return calculateSum(numbers) / numbers.size();
+    }
+    
+    @Override
+    public double findMinimum(List<Double> numbers) {
+        if (numbers == null || numbers.isEmpty()) {
+            throw new IllegalArgumentException("List of numbers cannot be null or empty");
+        }
+        return Collections.min(numbers);
+    }
+    
+    private int parseInput(String inputData) {
+        return Integer.parseInt(inputData.trim());
+    }
+    
     private List<Integer> findFactorsOptimized(int number) {
         List<Integer> factors = new ArrayList<>();
-        
-        // Only need to check up to the square root
         int sqrt = (int) Math.sqrt(number);
         
-        // Find factors up to square root
         for (int i = 1; i <= sqrt; i++) {
             if (number % i == 0) {
-                // Add the factor
                 factors.add(i);
-                
-                // Add the corresponding factor (except when they're the same)
                 if (i != number / i) {
                     factors.add(number / i);
                 }
             }
         }
-        
-        // Sort the factors for consistent output
-        factors.sort(Integer::compareTo);
-        
+        Collections.sort(factors);
         return factors;
     }
 }

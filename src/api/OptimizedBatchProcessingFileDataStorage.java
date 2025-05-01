@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-public class OptimizedBatchProcessingFileDataStorage implements DataStorage {
+public class OptimizedBatchProcessingFileDataStorage implements DataStorage, StorageAPI {
     // Optimized buffer sizes
     private static final int BUFFER_SIZE = 8 * 1024 * 1024; // 8MB main buffer
     private static final int SMALL_BUFFER_SIZE = 64 * 1024; // 64KB small buffer
@@ -81,7 +81,7 @@ public class OptimizedBatchProcessingFileDataStorage implements DataStorage {
     }
 
     @Override
-    public void writeData(String destination, String data) throws IOException {
+    public void writeDataContent(String destination, String data) throws IOException {
         if (destination == null || destination.trim().isEmpty()) {
             throw new IllegalArgumentException("Destination path cannot be null or empty");
         }
@@ -116,6 +116,57 @@ public class OptimizedBatchProcessingFileDataStorage implements DataStorage {
         if (fileContentCache.containsKey(destination)) {
             fileContentCache.put(destination, data);
         }
+    }
+    
+    /**
+     * Implements the StorageAPI interface writeData method.
+     * 
+     * @param destination Path to write data to
+     * @param data Data to write
+     * @return true if successful, false otherwise
+     */
+    @Override
+    public boolean writeData(String destination, String data) {
+        try {
+            writeDataContent(destination, data);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    /**
+     * Implements the StorageAPI interface readData method.
+     *
+     * @param request StorageRequest containing the source and delimiter
+     * @return StorageResponse with the read data
+     */
+    @Override
+    public StorageResponse readData(StorageRequest request) {
+        // Simplified implementation - adapt as needed based on your actual requirements
+        try {
+            String content = readData(request.getSource(), new String[]{request.getDelimiter()});
+            return new StorageResponseImpl(parse(content, request.getDelimiter()), true);
+        } catch (IOException e) {
+            return new StorageResponseImpl(java.util.Collections.emptyList(), false);
+        }
+    }
+    
+    private java.util.List<Integer> parse(String content, String delimiter) {
+        java.util.List<Integer> numbers = new java.util.ArrayList<>();
+        String[] values = delimiter.isEmpty() ? new String[]{content} : content.split(delimiter);
+        
+        for (String value : values) {
+            if (!value.trim().isEmpty()) {
+                try {
+                    numbers.add(Integer.parseInt(value.trim()));
+                } catch (NumberFormatException e) {
+                    // Skip non-integer values
+                }
+            }
+        }
+        return numbers;
     }
     
     /**

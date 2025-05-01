@@ -42,7 +42,6 @@ public class UserComputeAPIBenchmark {
         // Multiple GC calls help with stubborn resources
         for (int i = 0; i < 5; i++) {
             System.gc();
-            System.runFinalization();
             try {
                 TimeUnit.MILLISECONDS.sleep(50);
             } catch (InterruptedException e) {
@@ -116,7 +115,6 @@ public class UserComputeAPIBenchmark {
     private void cleanupResources() {
         // Force garbage collection and wait for finalization
         System.gc();
-        System.runFinalization();
         
         try {
             // Allow some time for JVM to stabilize between runs

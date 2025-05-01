@@ -20,7 +20,13 @@ public class InMemoryInputConfig implements StorageRequest {
         return inputData;
     }
 
+    @Override
     public String getSource() {
         return "memory";
+    }
+    
+    @Override
+    public String getDelimiter() {
+        return ",";
     }
 }
