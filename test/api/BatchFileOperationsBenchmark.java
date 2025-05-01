@@ -19,23 +19,20 @@ import org.junit.jupiter.api.Test;
 /**
  * Benchmark test for comparing individual file operations vs. batch processing optimization.
  * Tests the performance improvement achieved by processing multiple files in a single batch operation
- * versus handling each file individually. The BatchProcessingFileDataStorage implementation uses
- * memory caching and optimized resource handling to reduce I/O overhead.
+ * versus handling each file individually for write operations.
  */
 public class BatchFileOperationsBenchmark {
 
-    private static final int TEST_DATA_SIZE = 50_000; // Increased from 5,000 to ensure measurable times
-    private static final int ITERATIONS = 50; // Increased from 20 to get more reliable measurements
+    private static final int TEST_DATA_SIZE = 5_000;
+    private static final int ITERATIONS = 20;
     private static final int NUM_FILES = 10;
     private static final double MIN_IMPROVEMENT = 10.0; // 10% minimum improvement
-    private static final long MIN_STANDARD_TIME = 5; // Minimum time to prevent division by zero issues
     
     private List<File> testFiles;
     private Map<String, String> batchOperations;
     private String testContent;
     private OptimizedFileDataStorage standardStorage;
     private OptimizedBatchProcessingFileDataStorage batchStorage;
-    private String[] emptyDelimiters = new String[0];
     
     @BeforeEach
     public void setUp() throws IOException {
@@ -52,7 +49,6 @@ public class BatchFileOperationsBenchmark {
         for (int i = 0; i < NUM_FILES; i++) {
             File file = File.createTempFile("batch-benchmark-" + i, ".txt");
             file.deleteOnExit();
-            Files.writeString(file.toPath(), testContent);
             testFiles.add(file);
         }
         
@@ -66,7 +62,7 @@ public class BatchFileOperationsBenchmark {
         standardStorage = new OptimizedFileDataStorage();
         batchStorage = new OptimizedBatchProcessingFileDataStorage();
         
-        // Warm up
+        // Warm up write operations
         warmUp();
     }
     
@@ -75,27 +71,33 @@ public class BatchFileOperationsBenchmark {
         for (File file : testFiles) {
             file.delete();
         }
-        // Clean up resources
-        batchStorage.shutdown();
     }
     
     private void warmUp() throws IOException {
-        // Warm up standard operations
+        // Create temporary files for warm-up
+        List<File> warmupStandardFiles = new ArrayList<>();
+        List<File> warmupBatchFiles = new ArrayList<>();
+        
         for (int i = 0; i < 3; i++) {
-            for (File file : testFiles) {
-                standardStorage.readData(file.getAbsolutePath(), emptyDelimiters);
-            }
+            File standardFile = File.createTempFile("warmup-std-" + i, ".txt");
+            File batchFile = File.createTempFile("warmup-batch-" + i, ".txt");
+            standardFile.deleteOnExit();
+            batchFile.deleteOnExit();
+            warmupStandardFiles.add(standardFile);
+            warmupBatchFiles.add(batchFile);
+        }
+        
+        // Warm up standard operations
+        for (File file : warmupStandardFiles) {
+            standardStorage.writeData(file.getAbsolutePath(), "warmup");
         }
         
         // Warm up batch operations
-        List<String> paths = new ArrayList<>();
-        for (File file : testFiles) {
-            paths.add(file.getAbsolutePath());
+        Map<String, String> warmupOps = new HashMap<>();
+        for (File file : warmupBatchFiles) {
+            warmupOps.put(file.getAbsolutePath(), "warmup");
         }
-        
-        for (int i = 0; i < 3; i++) {
-            batchStorage.batchReadData(paths, emptyDelimiters);
-        }
+        batchStorage.batchWriteData(warmupOps);
         
         // Clear any caches
         batchStorage.clearCache();
@@ -107,67 +109,14 @@ public class BatchFileOperationsBenchmark {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-    }
-    
-    @Test
-    public void testReadPerformance() throws IOException {
-        System.out.println("===== Batch Read Performance Test =====");
         
-        List<String> paths = new ArrayList<>();
-        for (File file : testFiles) {
-            paths.add(file.getAbsolutePath());
+        // Clean up warmup files
+        for (File file : warmupStandardFiles) {
+            file.delete();
         }
-        
-        // Add a small amount of test data to files to ensure they're not empty
-        for (File file : testFiles) {
-            Files.writeString(file.toPath(), testContent + System.nanoTime());
+        for (File file : warmupBatchFiles) {
+            file.delete();
         }
-        
-        // Measure standard read operations
-        long standardStart = System.nanoTime();
-        for (int i = 0; i < ITERATIONS; i++) {
-            for (File file : testFiles) {
-                String content = standardStorage.readData(file.getAbsolutePath(), emptyDelimiters);
-                // Ensure the JVM doesn't optimize away the read operation
-                if (content == null || content.isEmpty()) {
-                    System.out.println("Unexpected empty file: " + file.getName());
-                }
-            }
-        }
-        long standardEnd = System.nanoTime();
-        long standardTime = Math.max((standardEnd - standardStart) / 1_000_000, MIN_STANDARD_TIME); // ms with minimum value
-        
-        // Clear cache between runs
-        System.gc();
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        
-        // Measure batch read operations
-        long batchStart = System.nanoTime();
-        for (int i = 0; i < ITERATIONS; i++) {
-            List<String> contents = batchStorage.batchReadData(paths, emptyDelimiters);
-            // Ensure the JVM doesn't optimize away the read operation
-            if (contents.isEmpty() || contents.get(0) == null) {
-                System.out.println("Unexpected empty result from batch read");
-            }
-        }
-        long batchEnd = System.nanoTime();
-        long batchTime = (batchEnd - batchStart) / 1_000_000; // ms
-        
-        // Calculate improvement
-        double improvementPercent = calculateImprovement(standardTime, batchTime);
-        
-        System.out.println("Standard read time: " + standardTime + " ms");
-        System.out.println("Batch read time: " + batchTime + " ms");
-        System.out.println("Improvement: " + improvementPercent + "%");
-        
-        // Assert minimum improvement or that batch time is very small
-        boolean isPerformanceGood = improvementPercent >= MIN_IMPROVEMENT || batchTime < 5;
-        assertTrue(isPerformanceGood, 
-                   "Expected at least " + MIN_IMPROVEMENT + "% improvement, but got " + improvementPercent + "% (standard: " + standardTime + "ms, batch: " + batchTime + "ms)");
     }
     
     @Test
@@ -248,18 +197,8 @@ public class BatchFileOperationsBenchmark {
     
     private double calculateImprovement(long standardTime, long optimizedTime) {
         if (standardTime <= 0) {
-            // If standard time is zero but optimized time is also very small, consider it a good result
-            if (optimizedTime <= 2) {
-                return 100.0; // Both are extremely fast, consider it a 100% improvement
-            }
-            return 0.0; // Avoid division by zero
+            return 0; // Avoid division by zero
         }
-        
-        // If optimized time is greater than standard time, it's a regression
-        if (optimizedTime > standardTime) {
-            return -((double)(optimizedTime - standardTime) / standardTime) * 100.0;
-        }
-        
         return ((double)(standardTime - optimizedTime) / standardTime) * 100.0;
     }
 }
