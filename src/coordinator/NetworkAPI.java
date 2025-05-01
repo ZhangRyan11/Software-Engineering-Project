@@ -1,8 +1,7 @@
 package coordinator;
 
-import project.annotations.NetworkAPI;
-
-@NetworkAPI
+// Use fully qualified annotation name to avoid naming conflict
+@project.annotations.NetworkAPI
 public interface NetworkAPI {
     /**
      * Starts a computation job with the given parameters.

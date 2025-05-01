@@ -44,5 +44,14 @@ public interface ComputationAPI {
      * @return The maximum value
      */
     double findMaximum(List<Double> numbers);
+    
+    /**
+     * Computes results based on input data and specified delimiters.
+     * 
+     * @param inputData The input data to process
+     * @param delimiters The delimiters used in the input data
+     * @return The computation result
+     */
+    ComputationResult compute(String inputData, String[] delimiters);
 }
 
