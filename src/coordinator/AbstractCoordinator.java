@@ -1,6 +1,8 @@
 package coordinator;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +34,39 @@ public abstract class AbstractCoordinator implements NetworkAPI {
      * @return List of integers read from the file
      */
     protected List<Integer> readInputFile(String inputPath, char delimiter) {
-        StorageRequest request = new StorageRequestImpl(inputPath, String.valueOf(delimiter));
-        StorageResponse response = dataStore.readData(request);
-        return response.getNumbers();
+        try {
+            StorageRequest request = new StorageRequestImpl(inputPath, String.valueOf(delimiter));
+            StorageResponse response = dataStore.readData(request);
+            return response.getNumbers();
+        } catch (Exception e) {
+            // Fallback to direct file reading if the API fails
+            return readInputFileDirectly(inputPath, delimiter);
+        }
+    }
+    
+    /**
+     * Direct implementation of file reading as a fallback method.
+     * 
+     * @param inputPath Path to the input file
+     * @param delimiter Character used to separate values
+     * @return List of integers read from the file
+     */
+    private List<Integer> readInputFileDirectly(String inputPath, char delimiter) {
+        List<Integer> numbers = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputPath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] values = line.split(String.valueOf(delimiter));
+                for (String value : values) {
+                    if (!value.trim().isEmpty()) {
+                        numbers.add(Integer.parseInt(value.trim()));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numbers;
     }
     
     /**
