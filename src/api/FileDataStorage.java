@@ -87,6 +87,15 @@ public class FileDataStorage implements StorageAPI, DataStorage {
         return content.toString();
     }
     
-    /**     * Implements the DataStorage interface writeDataContent method.     *      * @param destination The destination path     * @param data The data to write     * @throws IOException If an I/O error occurs     */    @Override    public void writeDataContent(String destination, String data) throws IOException {        doWriteData(destination, data);
+    /**
+     * Implements the DataStorage interface writeDataContent method.
+     * 
+     * @param destination The destination path
+     * @param data The data to write
+     * @throws IOException If an I/O error occurs
+     */
+    @Override
+    public void writeDataContent(String destination, String data) throws IOException {
+        doWriteData(destination, data);
     }
 }
