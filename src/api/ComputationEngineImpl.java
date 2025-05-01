@@ -75,13 +75,5 @@ public class ComputationEngineImpl implements ComputationAPI {
         return Integer.parseInt(inputData.trim());
     }
 
-    protected List<Integer> findFactors(int number) {
-        List<Integer> factors = new ArrayList<>();
-        for (int i = 1; i <= number; i++) {
-            if (number % i == 0) {
-                factors.add(i);
-            }
-        }
-        return factors;
-    }
+    // Removed duplicate findFactors method
 }

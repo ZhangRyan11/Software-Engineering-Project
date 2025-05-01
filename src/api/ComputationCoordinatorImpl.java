@@ -24,7 +24,7 @@ public class ComputationCoordinatorImpl implements ComputationCoordinator {
             // Write results if computation was successful
             if (result.isSuccess()) {
                 String outputData = formatOutput(result.getFactors());
-                dataStorage.writeData(request.getDestinationPath(), outputData);
+                dataStorage.writeDataContent(request.getDestinationPath(), outputData);
                 return new ComputeResponseImpl(true, null);
             }
             

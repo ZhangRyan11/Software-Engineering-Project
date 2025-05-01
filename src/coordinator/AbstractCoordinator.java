@@ -5,6 +5,7 @@ import java.util.List;
 import api.ComputationAPI;
 import api.StorageAPI;
 import api.StorageRequest;
+import api.StorageRequestImpl;
 import api.StorageResponse;
 
 /**
@@ -29,7 +30,7 @@ public abstract class AbstractCoordinator implements NetworkAPI {
      * @return List of integers read from the file
      */
     protected List<Integer> readInputFile(String inputPath, char delimiter) {
-        StorageRequest request = new StorageRequest(inputPath, String.valueOf(delimiter));
+        StorageRequest request = new StorageRequestImpl(inputPath, String.valueOf(delimiter));
         StorageResponse response = dataStore.readData(request);
         return response.getNumbers();
     }

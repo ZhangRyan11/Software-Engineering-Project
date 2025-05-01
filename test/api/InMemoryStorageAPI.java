@@ -21,8 +21,13 @@ public class InMemoryStorageAPI implements StorageAPI {
     }
 
     @Override
-    public void writeData(String destination, String data) {
-        outputConfig.addOutput(data);
+    public boolean writeData(String destination, String data) {
+        try {
+            outputConfig.addOutput(data);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public InMemoryInputConfig getInputConfig() {
@@ -33,9 +38,7 @@ public class InMemoryStorageAPI implements StorageAPI {
         return outputConfig;
     }
 
-	@Override
-	public String getSource() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getSource() {
+        return null;
+    }
 }

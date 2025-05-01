@@ -16,6 +16,38 @@ public interface ComputationAPI {
     ComputationResult compute(String inputData, String[] delimiters);
     
     /**
+     * Finds the factors of a given number.
+     * 
+     * @param number The number to find factors for
+     * @return List of factors
+     */
+    List<Integer> findFactors(int number);
+    
+    /**
+     * Calculates the sum of a list of numbers.
+     * 
+     * @param numbers The list of numbers to sum
+     * @return The sum of the numbers
+     */
+    double calculateSum(List<Double> numbers);
+    
+    /**
+     * Calculates the average of a list of numbers.
+     * 
+     * @param numbers The list of numbers to average
+     * @return The average of the numbers
+     */
+    double calculateAverage(List<Double> numbers);
+    
+    /**
+     * Finds the minimum value in a list of numbers.
+     * 
+     * @param numbers The list of numbers to search
+     * @return The minimum value
+     */
+    double findMinimum(List<Double> numbers);
+    
+    /**
      * Finds the maximum value in a list of numbers.
      * 
      * @param numbers The list of numbers to search

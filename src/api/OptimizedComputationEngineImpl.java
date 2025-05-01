@@ -20,7 +20,7 @@ public class OptimizedComputationEngineImpl implements ComputationAPI {
     public ComputationResult compute(String inputData, String[] delimiters) {
         try {
             int number = parseInput(inputData);
-            List<Integer> factors = findFactorsOptimized(number);
+            List<Integer> factors = findFactors(number);
             return new ComputationResultImpl(true, factors);
         } catch (NumberFormatException e) {
             return new ComputationResultImpl(false, null);
@@ -39,6 +39,39 @@ public class OptimizedComputationEngineImpl implements ComputationAPI {
             throw new IllegalArgumentException("List of numbers cannot be null or empty");
         }
         return Collections.max(numbers);
+    }
+    
+    @Override
+    public List<Integer> findFactors(int number) {
+        return findFactorsOptimized(number);
+    }
+    
+    @Override
+    public double calculateSum(List<Double> numbers) {
+        if (numbers == null || numbers.isEmpty()) {
+            return 0;
+        }
+        double sum = 0;
+        for (Double num : numbers) {
+            sum += num;
+        }
+        return sum;
+    }
+    
+    @Override
+    public double calculateAverage(List<Double> numbers) {
+        if (numbers == null || numbers.isEmpty()) {
+            return 0;
+        }
+        return calculateSum(numbers) / numbers.size();
+    }
+    
+    @Override
+    public double findMinimum(List<Double> numbers) {
+        if (numbers == null || numbers.isEmpty()) {
+            throw new IllegalArgumentException("List of numbers cannot be null or empty");
+        }
+        return Collections.min(numbers);
     }
     
     private int parseInput(String inputData) {
