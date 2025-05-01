@@ -1,23 +1,10 @@
 package api;
 
-import project.annotations.ConceptualAPI;
+import project.annotations.ProcessAPI;
 
-@ConceptualAPI
+@ProcessAPI
 public interface StorageAPI {
-    /**
-     * Reads data from storage based on the provided request.
-     * 
-     * @param request The storage request containing path and parsing information
-     * @return A response with the parsed data
-     */
     StorageResponse readData(StorageRequest request);
-    
-    /**
-     * Writes data to storage at the specified destination.
-     * 
-     * @param destination Path to write the data to
-     * @param data The data to write
-     * @return true if write was successful, false otherwise
-     */
-    boolean writeData(String destination, String data);
+    void writeData(String destination, String data);
+	String getSource();
 }

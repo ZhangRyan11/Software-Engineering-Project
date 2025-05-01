@@ -14,28 +14,22 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import api.ComputationEngineImpl;
-import api.ComputationAPI;
-import api.FileDataStorage;
-import api.StorageAPI;
-import coordinator.NetworkAPI;
-import coordinator.MultiThreadedCoordinator;
+import coordinator.NetworkAPI;  // Import the NetworkAPI interface
+import coordinator.MultiThreadedCoordinator; // Import your multi-threaded implementation
 
 public class TestMultiUser {
 	
+	// TODO 1: change the type of this variable to the name you're using for your @NetworkAPI
+	// interface
 	private NetworkAPI coordinator;
 	private MultiThreadedCoordinator multiThreadedCoordinator;
-	private ComputationAPI computationEngine;
-	private StorageAPI dataStore;
 	
 	@BeforeEach
 	public void initializeComputeEngine() {
-		// Create the needed components
-		computationEngine = new ComputationEngineImpl();
-		dataStore = new FileDataStorage();
-		
-		// Create the multi-threaded coordinator with the components
-		multiThreadedCoordinator = new MultiThreadedCoordinator(computationEngine, dataStore);
+		//TODO 2: create an instance of the implementation of your @NetworkAPI; this is the component
+		// that the user will make requests to
+		// Store it in the 'coordinator' instance variable
+		multiThreadedCoordinator = new MultiThreadedCoordinator();
 		coordinator = multiThreadedCoordinator;
 	}
 	
@@ -59,15 +53,13 @@ public class TestMultiUser {
 			File singleThreadedOut = 
 					new File(singleThreadFilePrefix + i);
 			singleThreadedOut.deleteOnExit();
-			boolean success = testUsers.get(i).run(singleThreadedOut.getCanonicalPath());
-			Assert.assertTrue("Single-threaded computation failed", success);
+			testUsers.get(i).run(singleThreadedOut.getCanonicalPath());
 		}
 		
 		// Run multi threaded
 		ExecutorService threadPool = Executors.newCachedThreadPool();
-		List<Future<Boolean>> results = new ArrayList<>();
+		List<Future<?>> results = new ArrayList<>();
 		String multiThreadFilePrefix = "testMultiUser.compareMultiAndSingleThreaded.test.multiThreadOut.tmp";
-		
 		for (int i = 0; i < numThreads; i++) {
 			File multiThreadedOut = 
 					new File(multiThreadFilePrefix + i);
@@ -77,10 +69,14 @@ public class TestMultiUser {
 			results.add(threadPool.submit(() -> testUser.run(multiThreadOutputPath)));
 		}
 		
-		// Check that all multi-threaded computations succeeded
-		for (Future<Boolean> future : results) {
-			Assert.assertTrue("Multi-threaded computation failed", future.get());
-		}
+		results.forEach(future -> {
+			try {
+				future.get();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		});
+		
 		
 		// Check that the output is the same for multi-threaded and single-threaded
 		List<String> singleThreaded = loadAllOutput(singleThreadFilePrefix, numThreads);
