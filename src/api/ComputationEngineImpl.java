@@ -8,8 +8,8 @@ import java.util.List;
  * Standard implementation of the ComputationAPI.
  */
 public class ComputationEngineImpl implements ComputationAPI {
-
     @Override
+    // compute takes input number and returns the computation result
     public ComputationResult compute(String inputData, String[] delimiters) {
         try {
             int number = parseInput(inputData);
@@ -74,6 +74,4 @@ public class ComputationEngineImpl implements ComputationAPI {
     protected int parseInput(String inputData) {
         return Integer.parseInt(inputData.trim());
     }
-
-    // Removed duplicate findFactors method
 }

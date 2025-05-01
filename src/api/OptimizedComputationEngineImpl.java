@@ -5,17 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * An optimized implementation of ComputationAPI with improved performance.
+ * Optimized implementation of the ComputationAPI that uses a more efficient
+ * algorithm for finding factors by only checking up to the square root of the input number.
  */
 public class OptimizedComputationEngineImpl implements ComputationAPI {
     
-    /**
-     * Computes results based on input data and specified delimiters.
-     * 
-     * @param inputData The input data to process
-     * @param delimiters The delimiters used in the input data
-     * @return The computation result
-     */
     @Override
     public ComputationResult compute(String inputData, String[] delimiters) {
         try {

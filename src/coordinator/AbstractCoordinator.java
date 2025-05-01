@@ -1,5 +1,7 @@
 package coordinator;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import api.ComputationAPI;
@@ -15,7 +17,7 @@ import api.StorageResponse;
 public abstract class AbstractCoordinator implements NetworkAPI {
     
     protected final ComputationAPI computationEngine;
-    protected final StorageAPI dataStore;
+    protected StorageAPI dataStore;
     
     public AbstractCoordinator(ComputationAPI computationEngine, StorageAPI dataStore) {
         this.computationEngine = computationEngine;
@@ -36,17 +38,20 @@ public abstract class AbstractCoordinator implements NetworkAPI {
     }
     
     /**
-     * Writes computation results to the output file using the data store component.
+     * Writes computation results to the output file.
      * 
      * @param outputPath Path where results should be written
      * @param results List of results to write
      */
     protected void writeOutput(String outputPath, List<String> results) {
-        StringBuilder builder = new StringBuilder();
-        for (String result : results) {
-            builder.append(result).append("\n");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
+            for (String result : results) {
+                writer.write(result);
+                writer.newLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        dataStore.writeData(outputPath, builder.toString());
     }
     
     /**

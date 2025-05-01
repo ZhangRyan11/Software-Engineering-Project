@@ -6,17 +6,21 @@ import java.util.List;
  * Implementation of the StorageResponse interface.
  */
 public class StorageResponseImpl implements StorageResponse {
-    private final List<Integer> numbers;
-    private final boolean success;
+    private List<Integer> data;
+    private boolean success;
     
-    public StorageResponseImpl(List<Integer> numbers, boolean success) {
-        this.numbers = numbers;
+    public StorageResponseImpl(List<Integer> data, boolean success) {
+        this.data = data;
         this.success = success;
+    }
+    
+    public List<Integer> getData() {
+        return data;
     }
     
     @Override
     public List<Integer> getNumbers() {
-        return numbers;
+        return data;
     }
     
     @Override

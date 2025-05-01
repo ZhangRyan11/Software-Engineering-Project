@@ -1,10 +1,12 @@
 package api;
 
 import java.util.List;
+import project.annotations.ConceptualAPI;
 
 /**
  * API for computation operations.
  */
+@ConceptualAPI
 public interface ComputationAPI {
     /**
      * Computes results based on input data and specified delimiters.

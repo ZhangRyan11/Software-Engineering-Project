@@ -1,14 +1,14 @@
 package api;
 
 /**
- * Standard implementation of the StorageRequest interface.
+ * Implementation of StorageRequest for file operations.
  */
 public class StorageRequestImpl implements StorageRequest {
-    private final String source;
-    private final String delimiter;
+    private String source;
+    private String delimiter;
     
     /**
-     * Creates a new storage request with source path and delimiter.
+     * Creates a new StorageRequestImpl.
      * 
      * @param source The source path
      * @param delimiter The delimiter for parsing
