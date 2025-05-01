@@ -30,51 +30,34 @@ public class OptimizedComputationEngineImpl implements ComputationAPI {
     /**
      * Finds the maximum value in a list of numbers.
      * 
-     * @param numbers List of numbers to find maximum from
-     * @return The maximum value or null if the list is empty
+     * @param numbers The list of numbers to search
+     * @return The maximum value
      */
     @Override
-    public Double findMaximum(List<Double> numbers) {
+    public double findMaximum(List<Double> numbers) {
         if (numbers == null || numbers.isEmpty()) {
-            return null;
+            throw new IllegalArgumentException("List of numbers cannot be null or empty");
         }
         return Collections.max(numbers);
     }
-
-    // Parse input string to integer
-    private int parseInput(String input) {
-        return Integer.parseInt(input.trim());
+    
+    private int parseInput(String inputData) {
+        return Integer.parseInt(inputData.trim());
     }
-
-    /**
-     * Optimized method to find factors by only checking up to the square root.
-     * For each factor found, its pair (number/factor) is also a factor.
-     * 
-     * @param number The number to find factors for
-     * @return List of all factors of the number
-     */
+    
     private List<Integer> findFactorsOptimized(int number) {
         List<Integer> factors = new ArrayList<>();
-        
-        // Only need to check up to the square root
         int sqrt = (int) Math.sqrt(number);
         
-        // Find factors up to square root
         for (int i = 1; i <= sqrt; i++) {
             if (number % i == 0) {
-                // Add the factor
                 factors.add(i);
-                
-                // Add the corresponding factor (except when they're the same)
                 if (i != number / i) {
                     factors.add(number / i);
                 }
             }
         }
-        
-        // Sort the factors for consistent output
-        factors.sort(Integer::compareTo);
-        
+        Collections.sort(factors);
         return factors;
     }
 }
