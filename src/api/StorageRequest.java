@@ -17,4 +17,5 @@ public interface StorageRequest {
      * @return The delimiter
      */
     String getDelimiter();
+
 }

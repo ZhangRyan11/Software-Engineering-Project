@@ -1,5 +1,6 @@
 package api;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,4 +25,5 @@ public interface StorageResponse {
      * @return True if successful, false otherwise
      */
     boolean isSuccess();
+
 }
