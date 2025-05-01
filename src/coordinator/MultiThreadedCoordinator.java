@@ -7,9 +7,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
- //Multi-threaded implementation of the NetworkAPI.
- //Uses a thread pool to process computation tasks in parallel.
+import api.ComputationAPI;
+import api.StorageAPI;
 
+/**
+ * Multi-threaded implementation of the NetworkAPI.
+ * Uses a thread pool to process computation tasks in parallel.
+ */
 public class MultiThreadedCoordinator extends AbstractCoordinator {
     
     // Upper bound for the number of threads in the pool
@@ -17,7 +21,8 @@ public class MultiThreadedCoordinator extends AbstractCoordinator {
     
     private final ExecutorService executorService;
     
-    public MultiThreadedCoordinator() {
+    public MultiThreadedCoordinator(ComputationAPI computationEngine, StorageAPI dataStore) {
+        super(computationEngine, dataStore);
         // Create a fixed thread pool with a reasonable upper bound
         this.executorService = Executors.newFixedThreadPool(MAX_THREADS);
     }
@@ -51,9 +56,10 @@ public class MultiThreadedCoordinator extends AbstractCoordinator {
         }
     }
     
-     //Shuts down the executor
-     //Call on this method when the coordinator is no longer needed.
-     
+    /**
+     * Shuts down the executor.
+     * Call this method when the coordinator is no longer needed.
+     */
     public void shutdown() {
         if (executorService != null && !executorService.isShutdown()) {
             executorService.shutdown();

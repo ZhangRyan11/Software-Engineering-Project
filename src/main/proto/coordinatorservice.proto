@@ -1,4 +1,4 @@
-syntax = "proto3";
+syntax = "proto2";
 
 option java_multiple_files = true;
 option java_package = "coordinatorservice";
@@ -25,78 +25,78 @@ message JobStatus {
         COMPLETED = 3;
         FAILED = 4;
     }
-    JobStatusType status = 1;
-    string message = 2;
-    double progress = 3;
-    bool completed = 4;
-    bool success = 5;
+    optional JobStatusType status = 1 [default = UNKNOWN];
+    optional string message = 2;
+    optional double progress = 3 [default = 0.0];
+    optional bool completed = 4 [default = false];
+    optional bool success = 5 [default = false];
 }
 
 message NumberListRequest {
     repeated double numbers = 1;
-    string output_file = 2;
-    string delimiter = 3;
-    string job_id = 4;  // Added for compatibility
+    optional string output_file = 2;
+    optional string delimiter = 3 [default = ","];
+    optional string job_id = 4;  // Added for compatibility
 }
 
 message FileRequest {
-    string file_path = 1;
-    string output_file = 2;
-    string delimiter = 3;
-    bytes file_content = 4;  // Optional binary content
+    optional string file_path = 1;
+    optional string output_file = 2;
+    optional string delimiter = 3 [default = ","];
+    optional bytes file_content = 4;  // Optional binary content
 }
 
 message StatusRequest {
-    string job_id = 1;
+    optional string job_id = 1;
 }
 
 message StatusResponse {
-    JobStatus job_status = 1;
+    optional JobStatus job_status = 1;
     repeated double results = 2;
-    bool completed = 3;
-    bool success = 4;
+    optional bool completed = 3 [default = false];
+    optional bool success = 4 [default = false];
 }
 
 message ComputationResponse {
-    string job_id = 1;
-    bool success = 2;
-    string message = 3;
+    optional string job_id = 1;
+    optional bool success = 2 [default = false];
+    optional string message = 3;
 }
 
 message GetCoordinatorRequest {
-    string id = 1;
+    optional string id = 1;
 }
 
 message GetCoordinatorResponse {
-    Coordinator coordinator = 1;
+    optional Coordinator coordinator = 1;
 }
 
 message CreateCoordinatorRequest {
-    Coordinator coordinator = 1;
+    optional Coordinator coordinator = 1;
 }
 
 message CreateCoordinatorResponse {
-    Coordinator coordinator = 1;
+    optional Coordinator coordinator = 1;
 }
 
 message UpdateCoordinatorRequest {
-    Coordinator coordinator = 1;
+    optional Coordinator coordinator = 1;
 }
 
 message UpdateCoordinatorResponse {
-    Coordinator coordinator = 1;
+    optional Coordinator coordinator = 1;
 }
 
 message DeleteCoordinatorRequest {
-    string id = 1;
+    optional string id = 1;
 }
 
 message DeleteCoordinatorResponse {
-    bool success = 1;
+    optional bool success = 1 [default = false];
 }
 
 message Coordinator {
-    string id = 1;
-    string name = 2;
-    string email = 3;
+    optional string id = 1;
+    optional string name = 2;
+    optional string email = 3;
 }

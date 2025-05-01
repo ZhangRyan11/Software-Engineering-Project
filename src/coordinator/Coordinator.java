@@ -2,11 +2,17 @@ package coordinator;
 
 import java.util.ArrayList;
 import java.util.List;
+import api.ComputationAPI;
+import api.StorageAPI;
 
 /**
  * Single-threaded implementation of the NetworkAPI.
  */
 public class Coordinator extends AbstractCoordinator {
+    
+    public Coordinator(ComputationAPI computationEngine, StorageAPI dataStore) {
+        super(computationEngine, dataStore);
+    }
     
     @Override
     public void startComputation(String inputPath, String outputPath, char delimiter) {
