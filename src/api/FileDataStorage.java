@@ -58,4 +58,27 @@ public class FileDataStorage implements DataStorage, StorageAPI {
     public void writeDataContent(String destination, String content) {
         writeData(destination, content);
     }
+
+    /**
+     * Parse raw string data into a StorageResponse
+     * @param data The raw data to parse
+     * @return StorageResponse containing parsed numbers
+     */
+    @Override
+    public StorageResponse parseData(String data) {
+        List<Integer> numbers = new ArrayList<>();
+        if (data != null && !data.isEmpty()) {
+            String[] parts = data.split("\\s+|,");
+            for (String part : parts) {
+                try {
+                    if (!part.trim().isEmpty()) {
+                        numbers.add(Integer.parseInt(part.trim()));
+                    }
+                } catch (NumberFormatException ignored) {
+                    // Skip non-numeric values
+                }
+            }
+        }
+        return new StorageResponseImpl(numbers, true);
+    }
 }
