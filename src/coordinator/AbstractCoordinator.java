@@ -11,7 +11,6 @@ import api.StorageAPI;
 import api.StorageRequest;
 import api.StorageRequestImpl;
 import api.StorageResponse;
-import api.StorageResponseImpl;
 
 
 /**
@@ -37,44 +36,18 @@ public abstract class AbstractCoordinator implements NetworkAPI {
      * @return List of integers read from the file
      */
     protected List<Integer> readInputFile(String inputPath, char delimiter) {
-
         try {
             StorageRequest request = new StorageRequestImpl(inputPath, String.valueOf(delimiter));
-            String source = request.getSource();
-            String[] delimiters = request.getDelimiters();
-            String data = dataStore.readData(source, delimiters);
+            String data = dataStore.readData(request.getSource(), request.getDelimiters());
             
-            // Create a StorageResponseImpl instead of directly instantiating StorageResponse
-            List<Integer> parsedData = parseDataToIntegers(data);
-            StorageResponse response = new StorageResponseImpl(parsedData, true);
+            // Properly delegate parsing to the StorageAPI instead of doing it here
+            StorageResponse response = dataStore.parseData(data);
             return response.getNumbers();
         } catch (Exception e) {
+            e.printStackTrace();
             // Fallback to direct file reading if the API fails
             return readInputFileDirectly(inputPath, delimiter);
         }
-    }
-    
-    /**
-     * Parse string data into a list of integers.
-     * 
-     * @param data The string data to parse
-     * @return List of parsed integers
-     */
-    private List<Integer> parseDataToIntegers(String data) {
-        List<Integer> numbers = new ArrayList<>();
-        if (data != null && !data.isEmpty()) {
-            String[] parts = data.split("\\s+|,");
-            for (String part : parts) {
-                try {
-                    if (!part.trim().isEmpty()) {
-                        numbers.add(Integer.parseInt(part.trim()));
-                    }
-                } catch (NumberFormatException ignored) {
-                    // Skip non-numeric values
-                }
-            }
-        }
-        return numbers;
     }
     
     /**

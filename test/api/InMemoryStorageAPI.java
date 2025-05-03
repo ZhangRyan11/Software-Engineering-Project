@@ -2,6 +2,8 @@ package api;
 
 import api.config.InMemoryInputConfig;
 import api.config.InMemoryOutputConfig;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InMemoryStorageAPI implements StorageAPI {
     public InMemoryInputConfig inputConfig;
@@ -35,6 +37,24 @@ public class InMemoryStorageAPI implements StorageAPI {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public StorageResponse parseData(String data) {
+        List<Integer> numbers = new ArrayList<>();
+        if (data != null && !data.isEmpty()) {
+            String[] parts = data.split("\\s+|,");
+            for (String part : parts) {
+                try {
+                    if (!part.trim().isEmpty()) {
+                        numbers.add(Integer.parseInt(part.trim()));
+                    }
+                } catch (NumberFormatException ignored) {
+                    // Skip non-numeric values
+                }
+            }
+        }
+        return new StorageResponseImpl(numbers, true);
     }
 
     public InMemoryInputConfig getInputConfig() {

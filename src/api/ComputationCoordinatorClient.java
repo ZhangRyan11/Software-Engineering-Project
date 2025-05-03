@@ -2,7 +2,6 @@ package api;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +20,7 @@ public class ComputationCoordinatorClient {
     private static final Logger logger = Logger.getLogger(ComputeCoordinatorClient.class.getName());
 
     private ManagedChannel channel;
-    private ComputationCoordinatorGrpc.ComputationCoordinatorStub asyncStub = null;
+    private ComputationCoordinatorGrpc.ComputationCoordinatorBlockingStub blockingStub;
 
     // Initialize the client with specified server coordinates
     public void init(String host, int port) {
@@ -29,7 +28,7 @@ public class ComputationCoordinatorClient {
         channel = ManagedChannelBuilder.forAddress(host, port)
                 .usePlaintext()
                 .build();
-        this.asyncStub = ComputationCoordinatorGrpc.newStub(channel);
+        this.blockingStub = ComputationCoordinatorGrpc.newBlockingStub(channel);
     }
 
     // Shuts down the gRPC channel, terminating all ongoing RPC calls.
@@ -37,8 +36,8 @@ public class ComputationCoordinatorClient {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
 
-    // Submits a list of numbers for computation processing.
-    public void submitNumberList(List<Double> numbers, String outputFile, String delimiter) {
+    // Submits a list of numbers for computation processing using blocking stub
+    public String submitNumberList(List<Double> numbers, String outputFile, String delimiter) {
         logger.info("Submitting number list...");
 
         // Build the request with all parameters
@@ -49,38 +48,24 @@ public class ComputationCoordinatorClient {
                 .build();
 
         try {
-            // Make an asynchronous call with callbacks
-            asyncStub.submitNumberList(request, new io.grpc.stub.StreamObserver<ComputationResponse>() {
-                @Override
-                public void onNext(ComputationResponse response) {
-                    logger.info("Computation started with job ID: " + response.getJobId());
-
-                    if (response.getSuccess()) {
-                        // Poll for status
-                        pollJobStatus(response.getJobId());
-                    } else {
-                        logger.warning("Failed to start computation: " + response.getMessage());
-                    }
-                }
-
-                @Override
-                public void onError(Throwable t) {
-                    logger.log(Level.WARNING, "Error submitting computation", t);
-                }
-
-                @Override
-                public void onCompleted() {
-                    // Nothing to do
-                }
-            });
+            // Make a synchronous call
+            ComputationResponse response = blockingStub.submitNumberList(request);
+            
+            if (response.getSuccess()) {
+                logger.info("Job submitted successfully with ID: " + response.getJobId());
+                return response.getJobId();
+            } else {
+                logger.warning("Failed to submit job: " + response.getMessage());
+                return null;
+            }
         } catch (StatusRuntimeException e) {
             logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-            return;
+            return null;
         }
     }
 
-    // Submits a file containing numbers for computation processing.
-    public void submitFile(String filePath, String outputFile, String delimiter) {
+    // Submits a file containing numbers for computation processing using blocking stub
+    public String submitFile(String filePath, String outputFile, String delimiter) {
         logger.info("Submitting file for computation: " + filePath);
 
         FileRequest request = FileRequest.newBuilder()
@@ -90,32 +75,19 @@ public class ComputationCoordinatorClient {
                 .build();
 
         try {
-            asyncStub.submitFile(request, new io.grpc.stub.StreamObserver<ComputationResponse>() {
-                @Override
-                public void onNext(ComputationResponse response) {
-                    logger.info("Computation started with job ID: " + response.getJobId());
+            // Make a synchronous call
+            ComputationResponse response = blockingStub.submitFile(request);
 
-                    if (response.getSuccess()) {
-                        // Poll for status
-                        pollJobStatus(response.getJobId());
-                    } else {
-                        logger.warning("Failed to start computation: " + response.getMessage());
-                    }
-                }
-
-                @Override
-                public void onError(Throwable t) {
-                    logger.log(Level.WARNING, "Error submitting computation", t);
-                }
-
-                @Override
-                public void onCompleted() {
-                    // Nothing to do
-                }
-            });
+            if (response.getSuccess()) {
+                logger.info("Job submitted successfully with ID: " + response.getJobId());
+                return response.getJobId();
+            } else {
+                logger.warning("Failed to submit job: " + response.getMessage());
+                return null;
+            }
         } catch (StatusRuntimeException e) {
             logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-            return;
+            return null;
         }
     }
 
@@ -125,10 +97,10 @@ public class ComputationCoordinatorClient {
     private void pollJobStatus(String jobId) {
         // Create a new thread to handle polling
         new Thread(() -> {
-            final AtomicBoolean completed = new AtomicBoolean(false);
+            boolean completed = false;
 
             // Continue polling until job is completed
-            while (!completed.get()) {
+            while (!completed) {
                 try {
                     // Wait between polling attempts to avoid overwhelming the server
                     Thread.sleep(1000);
@@ -138,67 +110,43 @@ public class ComputationCoordinatorClient {
                             .setJobId(jobId)
                             .build();
 
-                    // Make asynchronous call to check status
-                    asyncStub.getStatus(request, new io.grpc.stub.StreamObserver<StatusResponse>() {
-                        // Process status updates from the server.
-                        // Displays results when computation is completed.
-                        @Override
-                        public void onNext(StatusResponse response) {
-                            if (response.getCompleted()) {
-                                if (response.getSuccess()) {
-                                    logger.info("Computation completed successfully!");
+                    // Make synchronous call to check status
+                    StatusResponse response = blockingStub.getStatus(request);
 
-                                    // Print results if available
-                                    List<Double> results = response.getResultsList();
-                                    if (!results.isEmpty()) {
-                                        System.out.println("\nResults:");
-                                        if (results.size() >= 1) {
-                                            System.out.println("Sum: " + results.get(0));
-                                        }
-                                        if (results.size() >= 2) {
-                                            System.out.println("Average: " + results.get(1));
-                                        }
-                                        if (results.size() >= 3) {
-                                            System.out.println("Min: " + results.get(2));
-                                        }
-                                        if (results.size() >= 4) {
-                                            System.out.println("Max: " + results.get(3));
-                                        }
-                                    }
-                                } else {
-                                    logger.warning("Computation failed: " + response.getJobStatus().getMessage());
+                    if (response.getCompleted()) {
+                        if (response.getSuccess()) {
+                            logger.info("Computation completed successfully!");
+
+                            // Print results if available
+                            List<Double> results = response.getResultsList();
+                            if (!results.isEmpty()) {
+                                System.out.println("\nResults:");
+                                if (results.size() >= 1) {
+                                    System.out.println("Sum: " + results.get(0));
                                 }
-
-                                synchronized (Thread.currentThread()) {
-                                    Thread.currentThread().notifyAll();
+                                if (results.size() >= 2) {
+                                    System.out.println("Average: " + results.get(1));
                                 }
-                                completed.set(true);  // Use AtomicBoolean's set method
-                            } else {
-                                logger.info("Job still in progress...");
+                                if (results.size() >= 3) {
+                                    System.out.println("Min: " + results.get(2));
+                                }
+                                if (results.size() >= 4) {
+                                    System.out.println("Max: " + results.get(3));
+                                }
                             }
+                        } else {
+                            logger.warning("Computation failed: " + response.getJobStatus().getMessage());
                         }
-
-                        @Override
-                        public void onError(Throwable t) {
-                            logger.log(Level.WARNING, "Error checking job status", t);
-                            synchronized (Thread.currentThread()) {
-                                Thread.currentThread().notifyAll();
-                            }
-                            completed.set(true);  // Use AtomicBoolean's set method
-                        }
-
-                        @Override
-                        public void onCompleted() {
-                            // Nothing to do
-                        }
-                    });
-
-                    synchronized (Thread.currentThread()) {
-                        Thread.currentThread().wait(500);
+                        completed = true;
+                    } else {
+                        logger.info("Job still in progress...");
                     }
 
                 } catch (InterruptedException e) {
                     logger.log(Level.WARNING, "Polling interrupted", e);
+                    break;
+                } catch (StatusRuntimeException e) {
+                    logger.log(Level.WARNING, "Error checking job status", e);
                     break;
                 }
             }
@@ -223,7 +171,10 @@ public class ComputationCoordinatorClient {
             numbers.add(25.0);
             
             String outputFile1 = "in-memory-test-output.txt";
-            client.submitNumberList(numbers, outputFile1, ",");
+            String jobId1 = client.submitNumberList(numbers, outputFile1, ",");
+            if (jobId1 != null) {
+                client.pollJobStatus(jobId1);
+            }
             
             // Wait a bit for the first test to complete
             Thread.sleep(5000);
@@ -232,7 +183,10 @@ public class ComputationCoordinatorClient {
             System.out.println("\nTEST 2: FILE INPUT");
             String inputFile = "input.txt";
             String outputFile2 = "file-test-output.txt";
-            client.submitFile(inputFile, outputFile2, ",");
+            String jobId2 = client.submitFile(inputFile, outputFile2, ",");
+            if (jobId2 != null) {
+                client.pollJobStatus(jobId2);
+            }
             
             // Wait for test completion
             Thread.sleep(10000);
